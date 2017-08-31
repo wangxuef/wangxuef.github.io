@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="能孩子">
 <meta property="og:description" content="单例模式的实现单例模式：保证一个类仅有一个实例，并提供一个访问它的全局访问点。 特点：  单例类确保自己只有一个实例(构造函数私有:不被外部实例化,也不被继承)。 单例类必须自己创建自己的实例。 单例类必须为其他对象提供唯一的实例。  应用： 资源管理器,回收站,打印机资源,线程池,缓存,配置信息类,管理类,控制类,门面类,代理类通常被设计为单例类。如果程序有多个类加载器又同时使用单例模式就有可能">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-31T12:37:03.000Z">
+<meta property="og:updated_time" content="2017-08-31T15:57:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="单例模式">
 <meta name="twitter:description" content="单例模式的实现单例模式：保证一个类仅有一个实例，并提供一个访问它的全局访问点。 特点：  单例类确保自己只有一个实例(构造函数私有:不被外部实例化,也不被继承)。 单例类必须自己创建自己的实例。 单例类必须为其他对象提供唯一的实例。  应用： 资源管理器,回收站,打印机资源,线程池,缓存,配置信息类,管理类,控制类,门面类,代理类通常被设计为单例类。如果程序有多个类加载器又同时使用单例模式就有可能">
@@ -245,16 +245,6 @@
           </a>
         </li>
       
-        
-        <li class="menu-item menu-item-历史">
-          <a href="/history" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            历史
-          </a>
-        </li>
-      
 
       
     </ul>
@@ -328,6 +318,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -365,7 +377,7 @@
 <p>应用：</p>
 <p>资源管理器,回收站,打印机资源,线程池,缓存,配置信息类,管理类,控制类,门面类,代理类通常被设计为单例类。如果程序有多个类加载器又同时使用单例模式就有可能多个单例并存就要找相应解决方法了。</p>
 <h4 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h4><p>依赖jvm在加载类时创建唯一单例实例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class EagerSingleton &#123;</div><div class="line">    // jvm保证在任何线程访问instance静态变量之前一定先创建了此实例</div><div class="line">    private static EagerSingleton instance = new EagerSingleton();</div><div class="line"></div><div class="line">    private EagerSingleton()&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static EagerSingleton getInstance()&#123;</div><div class="line">        return instance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EagerSingleton</span> </span>&#123;</div><div class="line">    <span class="comment">// jvm保证在任何线程访问instance静态变量之前一定先创建了此实例</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> EagerSingleton instance = <span class="keyword">new</span> EagerSingleton();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">EagerSingleton</span><span class="params">()</span></span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> EagerSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> instance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class LazySingleton &#123;</div><div class="line"></div><div class="line">    private static LazySingleton instance;</div><div class="line"></div><div class="line">    private LazySingleton()&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static synchronized LazySingleton getInstance()&#123;</div><div class="line">        if(null == instance)&#123;</div><div class="line">            return new LazySingleton();</div><div class="line">        &#125;</div><div class="line">        return instance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>同步一个方法可能造成程序执行效率下降100倍，完全没有必要每次调用getInstance都加锁，事实上我们只想保证一次初始化成功，其余的快速返回而已，如果在getInstance频繁使用的地方就要考虑重新优化了。</p>
 <p>优化：”双检锁”(Double-Checked Lock)尽量将”加锁”推迟,只在需要时”加锁”。</p>
@@ -391,6 +403,40 @@
 
     
 
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>支持一下 ^_^</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="能孩子 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="能孩子 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="能孩子 Bitcoin"/>
+        <p>Bitcoin</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
     
 
     
@@ -501,6 +547,15 @@
           
 
           
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
 
           
             
@@ -525,6 +580,24 @@
         
 
         
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://liuys.me/" title="Kntt" target="_blank">Kntt</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://ibruce.info/" title="不如" target="_blank">不如</a>
+                </li>
+              
+            </ul>
+          </div>
         
 
         
@@ -564,7 +637,7 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy; 
+  &copy;  2016 &mdash; 
   <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
@@ -622,6 +695,8 @@
   
 
 
+  
+
 
 
 
@@ -649,6 +724,9 @@
 
   
   <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
 
 
   
