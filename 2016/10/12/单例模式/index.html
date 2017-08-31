@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="单例模式的实现单例模式：保证一个类仅有一个实例，并提供一个访问它的全局访问点。 特点：  单例类确保自己只有一个实例(构造函数私有:不被外部实例化,也不被继承)。 单例类必须自己创建自己的实例。 单例类必须为其他对象提供唯一的实例。  应用： 资源管理器,回收站,打印机资源,线程池,缓存,配置信息类,管理类,控制类,门面类,代理类通常被设计为单例类。如果程序有多个类加载器又同时使用单例模式就有可能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单例模式">
+<meta property="og:url" content="http://yoursite.com/2016/10/12/单例模式/index.html">
+<meta property="og:site_name" content="能孩子">
+<meta property="og:description" content="单例模式的实现单例模式：保证一个类仅有一个实例，并提供一个访问它的全局访问点。 特点：  单例类确保自己只有一个实例(构造函数私有:不被外部实例化,也不被继承)。 单例类必须自己创建自己的实例。 单例类必须为其他对象提供唯一的实例。  应用： 资源管理器,回收站,打印机资源,线程池,缓存,配置信息类,管理类,控制类,门面类,代理类通常被设计为单例类。如果程序有多个类加载器又同时使用单例模式就有可能">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-31T12:37:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="单例模式">
+<meta name="twitter:description" content="单例模式的实现单例模式：保证一个类仅有一个实例，并提供一个访问它的全局访问点。 特点：  单例类确保自己只有一个实例(构造函数私有:不被外部实例化,也不被继承)。 单例类必须自己创建自己的实例。 单例类必须为其他对象提供唯一的实例。  应用： 资源管理器,回收站,打印机资源,线程池,缓存,配置信息类,管理类,控制类,门面类,代理类通常被设计为单例类。如果程序有多个类加载器又同时使用单例模式就有可能">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/10/12/单例模式/"/>
+
+
+
+
+
+  <title>单例模式 | 能孩子</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">能孩子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-历史">
+          <a href="/history" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            历史
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/12/单例模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="能孩子">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="能孩子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">单例模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-12T11:09:30+08:00">
+                2016-10-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="单例模式的实现"><a href="#单例模式的实现" class="headerlink" title="单例模式的实现"></a>单例模式的实现</h3><p>单例模式：保证一个类仅有一个实例，并提供一个访问它的全局访问点。</p>
+<p>特点：</p>
+<ul>
+<li>单例类确保自己只有一个实例(构造函数私有:不被外部实例化,也不被继承)。</li>
+<li>单例类必须自己创建自己的实例。</li>
+<li>单例类必须为其他对象提供唯一的实例。</li>
+</ul>
+<p>应用：</p>
+<p>资源管理器,回收站,打印机资源,线程池,缓存,配置信息类,管理类,控制类,门面类,代理类通常被设计为单例类。如果程序有多个类加载器又同时使用单例模式就有可能多个单例并存就要找相应解决方法了。</p>
+<h4 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h4><p>依赖jvm在加载类时创建唯一单例实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class EagerSingleton &#123;</div><div class="line">    // jvm保证在任何线程访问instance静态变量之前一定先创建了此实例</div><div class="line">    private static EagerSingleton instance = new EagerSingleton();</div><div class="line"></div><div class="line">    private EagerSingleton()&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static EagerSingleton getInstance()&#123;</div><div class="line">        return instance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class LazySingleton &#123;</div><div class="line"></div><div class="line">    private static LazySingleton instance;</div><div class="line"></div><div class="line">    private LazySingleton()&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static synchronized LazySingleton getInstance()&#123;</div><div class="line">        if(null == instance)&#123;</div><div class="line">            return new LazySingleton();</div><div class="line">        &#125;</div><div class="line">        return instance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>同步一个方法可能造成程序执行效率下降100倍，完全没有必要每次调用getInstance都加锁，事实上我们只想保证一次初始化成功，其余的快速返回而已，如果在getInstance频繁使用的地方就要考虑重新优化了。</p>
+<p>优化：”双检锁”(Double-Checked Lock)尽量将”加锁”推迟,只在需要时”加锁”。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public class LazySingleton2 &#123;</div><div class="line"></div><div class="line">    private volatile static LazySingleton2 instance;</div><div class="line"></div><div class="line">    private LazySingleton2()&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static LazySingleton2 getInstance()&#123;</div><div class="line">        if(null == instance) &#123;</div><div class="line">            synchronized (LazySingleton2.class) &#123;</div><div class="line">                if (null == instance) &#123;</div><div class="line">                    instance = new LazySingleton2();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return instance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>或者：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public class LazySingleton3 &#123;</div><div class="line"></div><div class="line">    private static LazySingleton3 instance;</div><div class="line"></div><div class="line">    private LazySingleton3()&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 将创建类的方法和getInstance()分开，单独为创建类的方法加synchronized关键字：</div><div class="line">    private static synchronized void syncInit()&#123;</div><div class="line">        if(null == instance)&#123;</div><div class="line">            instance = new LazySingleton3();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static LazySingleton3 getInstance()&#123;</div><div class="line">        if(null == instance) &#123;</div><div class="line">            syncInit();</div><div class="line">        &#125;</div><div class="line">        return instance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>静态内部类实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class InitHolderSingleton &#123;</div><div class="line"></div><div class="line">    private InitHolderSingleton()&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static class SingletonFactory&#123;</div><div class="line">        private static final InitHolderSingleton instance = new InitHolderSingleton();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static InitHolderSingleton getInstance()&#123;</div><div class="line">        return SingletonFactory.instance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>根据jvm规范，当某对象第一次调用InitHolderSingleton.getInstance()时，InitHolderSingleton类被首次主动使用，jvm对其进行初始化（此时并不会调用InitHolderSingleton()构造方法），然后InitHolderSingleton调用getInstance()方法，该方法中，又首次主动使用了SingletonFactory类，所以要对SingletonHolder类进行初始化，初始化中，instance常量被赋值时才调用了 InitHolderSingleton的构造方法InitHolderSingleton()，完成了实例化并返回该实例。当再有对象（也许是在别的线程中）再次调用InitHolderSingleton.getInstance()时，因为已经初始化过了，不会再进行初始化步骤，所以直接返回instance常量即同一个InitHolderSingleton实例。</p>
+<h3 id="如何防止单例模式被JAVA反射攻击"><a href="#如何防止单例模式被JAVA反射攻击" class="headerlink" title="如何防止单例模式被JAVA反射攻击"></a>如何防止单例模式被JAVA反射攻击</h3><p>通过JAVA的反射机制来“攻击”单例模式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class ReflectAttack &#123;</div><div class="line"></div><div class="line">    public static void main(String[] args) throws Exception &#123;</div><div class="line">        Class&lt;?&gt; classType = InitHolderSingleton.class;</div><div class="line">        Constructor&lt;?&gt; c = classType.getDeclaredConstructor(null);</div><div class="line">        c.setAccessible(true);</div><div class="line"></div><div class="line">        InitHolderSingleton ins1 = (InitHolderSingleton)c.newInstance();</div><div class="line">        InitHolderSingleton ins2 = InitHolderSingleton.getInstance();</div><div class="line">        System.out.println(ins1 == ins2); // output:false</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过反射获取构造函数，然后调用setAccessible(true)就可以调用私有的构造函数，所有ins1和ins2是两个不同的对象。</p>
+<p>如果要抵御这种攻击，可以修改构造器，让它在被要求创建第二个实例的时候抛出异常。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class InitHolderSingleton &#123;</div><div class="line"></div><div class="line">    private static boolean flag = false;</div><div class="line"></div><div class="line">    // 修改后的构造器</div><div class="line">    private InitHolderSingleton()&#123;</div><div class="line">        synchronized (InitHolderSingleton.class)&#123;</div><div class="line">            if(flag == false)</div><div class="line">                flag = !flag;</div><div class="line">            else</div><div class="line">                throw new RuntimeException(&quot;单例模式被侵犯&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static class SingletonFactory&#123;</div><div class="line">        private static final InitHolderSingleton instance = new InitHolderSingleton();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static InitHolderSingleton getInstance()&#123;</div><div class="line">        return SingletonFactory.instance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>此外，枚举类型的单例模式可以防止单例模式被反射“攻击”，也可以防止序列化破坏单例模式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public enum SinletonClass &#123;</div><div class="line">    INSTSNCE;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/11/11/装饰者模式/" rel="next" title="装饰模式">
+                <i class="fa fa-chevron-left"></i> 装饰模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/12/工厂模式/" rel="prev" title="工厂模式">
+                工厂模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <p class="site-author-name" itemprop="name">能孩子</p>
+            <p class="site-description motion-element" itemprop="description">联通快递</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#单例模式的实现"><span class="nav-number">1.</span> <span class="nav-text">单例模式的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#饿汉式"><span class="nav-number">1.1.</span> <span class="nav-text">饿汉式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#懒汉式"><span class="nav-number">1.2.</span> <span class="nav-text">懒汉式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何防止单例模式被JAVA反射攻击"><span class="nav-number">2.</span> <span class="nav-text">如何防止单例模式被JAVA反射攻击</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">能孩子</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
