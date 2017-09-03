@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="当前时间123456789//当前时间戳fmt.Println(time.Now().Unix())// 格式化时间fmt.Println(time.Now().Format(&quot;2006-01-02 15:04:05&quot;)) //年月日时分秒格式为固定数字//时间戳-&amp;gt; 格式化fmt.Println(time.Unix(1504429995, 0).Format(&quot;2006-01-02 15:">
+<meta name="description" content="功能：每天上午7点，晚上7点检查当前系统时间是否大于给定阈值，若大于则执行命令杀死当前进程 实现：定时任务使用 github.com/robfig/cronos/exec 执行shell命令（kill -9） 1234567891011121314151617func main() &amp;#123;	expireTime := &quot;2017-09-09 21:23:00&quot;	et, _ := time.P">
 <meta name="keywords" content="go">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Golang 时间日期">
-<meta property="og:url" content="http://boyneng.com/2017/09/03/Golang 时间日期/index.html">
+<meta property="og:title" content="Golang 定时处理">
+<meta property="og:url" content="http://boyneng.com/2017/09/03/Golang 定时处理/index.html">
 <meta property="og:site_name" content="能孩子">
-<meta property="og:description" content="当前时间123456789//当前时间戳fmt.Println(time.Now().Unix())// 格式化时间fmt.Println(time.Now().Format(&quot;2006-01-02 15:04:05&quot;)) //年月日时分秒格式为固定数字//时间戳-&amp;gt; 格式化fmt.Println(time.Unix(1504429995, 0).Format(&quot;2006-01-02 15:">
+<meta property="og:description" content="功能：每天上午7点，晚上7点检查当前系统时间是否大于给定阈值，若大于则执行命令杀死当前进程 实现：定时任务使用 github.com/robfig/cronos/exec 执行shell命令（kill -9） 1234567891011121314151617func main() &amp;#123;	expireTime := &quot;2017-09-09 21:23:00&quot;	et, _ := time.P">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-03T09:19:08.000Z">
+<meta property="og:updated_time" content="2017-09-03T14:00:09.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Golang 时间日期">
-<meta name="twitter:description" content="当前时间123456789//当前时间戳fmt.Println(time.Now().Unix())// 格式化时间fmt.Println(time.Now().Format(&quot;2006-01-02 15:04:05&quot;)) //年月日时分秒格式为固定数字//时间戳-&amp;gt; 格式化fmt.Println(time.Unix(1504429995, 0).Format(&quot;2006-01-02 15:">
+<meta name="twitter:title" content="Golang 定时处理">
+<meta name="twitter:description" content="功能：每天上午7点，晚上7点检查当前系统时间是否大于给定阈值，若大于则执行命令杀死当前进程 实现：定时任务使用 github.com/robfig/cronos/exec 执行shell命令（kill -9） 1234567891011121314151617func main() &amp;#123;	expireTime := &quot;2017-09-09 21:23:00&quot;	et, _ := time.P">
 
 
 
@@ -136,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://boyneng.com/2017/09/03/Golang 时间日期/"/>
+  <link rel="canonical" href="http://boyneng.com/2017/09/03/Golang 定时处理/"/>
 
 
 
 
 
-  <title>Golang 时间日期 | 能孩子</title>
+  <title>Golang 定时处理 | 能孩子</title>
   
 
 
@@ -279,7 +279,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2017/09/03/Golang 时间日期/">
+    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2017/09/03/Golang 定时处理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="能孩子">
@@ -296,7 +296,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Golang 时间日期</h1>
+          <h1 class="post-title" itemprop="name headline">Golang 定时处理</h1>
         
 
         <div class="post-meta">
@@ -308,7 +308,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-03T17:04:02+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-03T21:45:02+08:00">
                 2017-09-03
               </time>
             
@@ -346,8 +346,11 @@
       
 
       
-        <h4 id="当前时间"><a href="#当前时间" class="headerlink" title="当前时间"></a>当前时间</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//当前时间戳</span></div><div class="line">fmt.Println(time.Now().Unix())</div><div class="line"><span class="comment">// 格式化时间</span></div><div class="line">fmt.Println(time.Now().Format(<span class="string">"2006-01-02 15:04:05"</span>)) <span class="comment">//年月日时分秒格式为固定数字</span></div><div class="line"><span class="comment">//时间戳-&gt; 格式化</span></div><div class="line">fmt.Println(time.Unix(<span class="number">1504429995</span>, <span class="number">0</span>).Format(<span class="string">"2006-01-02 15:04:05"</span>))</div><div class="line"><span class="comment">//格式化 -&gt; 时间戳</span></div><div class="line">t, _ := time.Parse(<span class="string">"2006-01-02 15:04:05"</span>, <span class="string">"2018-01-01 00:04:00"</span>)</div><div class="line">fmt.Println(t.Unix())</div></pre></td></tr></table></figure>
-
+        <p>功能：每天上午7点，晚上7点检查当前系统时间是否大于给定阈值，若大于则执行命令杀死当前进程</p>
+<p>实现：<br>定时任务使用 github.com/robfig/cron<br>os/exec 执行shell命令（kill -9）</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	expireTime := <span class="string">"2017-09-09 21:23:00"</span></div><div class="line">	et, _ := time.Parse(<span class="string">"2006-01-02 15:04:05"</span>, expireTime)</div><div class="line">	expireStamp := et.Unix()</div><div class="line">	cronTime := <span class="string">"0 0 7,19 ? * *"</span></div><div class="line">	c := cron.New()</div><div class="line">	c.AddFunc(cronTime, <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">		nowStamp := time.Now().Unix()</div><div class="line">		<span class="keyword">if</span> nowStamp &gt; expireStamp &#123;</div><div class="line">			pid := os.Getpid()</div><div class="line">			cmd := exec.Command(<span class="string">"/bin/sh"</span>, <span class="string">"-c"</span>, <span class="string">"kill -9 "</span>+strconv.Itoa(pid))</div><div class="line">			cmd.Run()</div><div class="line">		&#125;</div><div class="line">	&#125;)</div><div class="line">	c.Start()</div><div class="line">	<span class="keyword">select</span> &#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre><code>注：select{} 阻止主线程推出
+</code></pre>
       
     </div>
     
@@ -411,8 +414,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/03/govendor golang依赖管理/" rel="next" title="govendor golang依赖管理">
-                <i class="fa fa-chevron-left"></i> govendor golang依赖管理
+              <a href="/2017/09/03/Golang 时间日期/" rel="next" title="Golang 时间日期">
+                <i class="fa fa-chevron-left"></i> Golang 时间日期
               </a>
             
           </div>
@@ -420,10 +423,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/03/Golang 定时处理/" rel="prev" title="Golang 定时处理">
-                Golang 定时处理 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -475,17 +474,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <p class="site-author-name" itemprop="name">能孩子</p>
@@ -564,22 +554,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#当前时间"><span class="nav-number">1.</span> <span class="nav-text">当前时间</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
