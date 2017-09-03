@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="docker," />
 
 
 
@@ -95,17 +95,18 @@
 
 
 
-<meta name="description" content="代理模式就是多一个代理类出来，替原对象进行一些操作。">
+<meta name="description" content="#  镜像 docker pull [选项] [Docker Registry地址]&amp;lt;仓库名&amp;gt;:&amp;lt;标签&amp;gt; docker pull ubuntu:14.04  上面的命令中没有给出 Docker Registry 地址，因此将会从 Docker Hub 获取镜像。而镜像名称是 ubuntu:14.04，因此将会获取官方镜像 library/ubuntu 仓库中标签为 14.0">
+<meta name="keywords" content="docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="代理模式">
-<meta property="og:url" content="http://boyneng.com/2016/10/14/代理模式/index.html">
+<meta property="og:title" content="docker 常用命令">
+<meta property="og:url" content="http://boyneng.com/2016/10/22/docker 常用命令/index.html">
 <meta property="og:site_name" content="能孩子">
-<meta property="og:description" content="代理模式就是多一个代理类出来，替原对象进行一些操作。">
+<meta property="og:description" content="#  镜像 docker pull [选项] [Docker Registry地址]&amp;lt;仓库名&amp;gt;:&amp;lt;标签&amp;gt; docker pull ubuntu:14.04  上面的命令中没有给出 Docker Registry 地址，因此将会从 Docker Hub 获取镜像。而镜像名称是 ubuntu:14.04，因此将会获取官方镜像 library/ubuntu 仓库中标签为 14.0">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-31T12:50:09.000Z">
+<meta property="og:updated_time" content="2017-09-03T07:27:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="代理模式">
-<meta name="twitter:description" content="代理模式就是多一个代理类出来，替原对象进行一些操作。">
+<meta name="twitter:title" content="docker 常用命令">
+<meta name="twitter:description" content="#  镜像 docker pull [选项] [Docker Registry地址]&amp;lt;仓库名&amp;gt;:&amp;lt;标签&amp;gt; docker pull ubuntu:14.04  上面的命令中没有给出 Docker Registry 地址，因此将会从 Docker Hub 获取镜像。而镜像名称是 ubuntu:14.04，因此将会获取官方镜像 library/ubuntu 仓库中标签为 14.0">
 
 
 
@@ -135,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://boyneng.com/2016/10/14/代理模式/"/>
+  <link rel="canonical" href="http://boyneng.com/2016/10/22/docker 常用命令/"/>
 
 
 
 
 
-  <title>代理模式 | 能孩子</title>
+  <title>docker 常用命令 | 能孩子</title>
   
 
 
@@ -278,7 +279,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2016/10/14/代理模式/">
+    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2016/10/22/docker 常用命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="能孩子">
@@ -295,7 +296,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">代理模式</h1>
+          <h1 class="post-title" itemprop="name headline">docker 常用命令</h1>
         
 
         <div class="post-meta">
@@ -307,8 +308,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-14T09:27:38+08:00">
-                2016-10-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-22T11:33:02+08:00">
+                2016-10-22
               </time>
             
 
@@ -345,7 +346,57 @@
       
 
       
-        <p>代理模式就是多一个代理类出来，替原对象进行一些操作。</p>
+        <p># </p>
+<h4 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h4><ul>
+<li>docker pull [选项] [Docker Registry地址]&lt;仓库名&gt;:&lt;标签&gt;</li>
+<li>docker pull ubuntu:14.04</li>
+</ul>
+<p>上面的命令中没有给出 Docker Registry 地址，因此将会从 Docker Hub 获取镜像。而镜像名称是 ubuntu:14.04，因此将会获取官方镜像 library/ubuntu 仓库中标签为 14.04 的镜像。</p>
+<ul>
+<li>在某个镜像的基础上运行容器</li>
+<li>命令举例：docker run -it –rm ubuntu:14.04 bash</li>
+</ul>
+<p><em>每次执行 docker run  命令都会创建新的容器，建议一次创建后，使用 docker start/stop  来启动和停用容器。</em></p>
+<pre><code>-i：交互式操作   
+-t：终端    
+--rm: 容器退出后随之将其删除    
+ubuntu:14.04：表示用这个镜像为基础启动容器
+bash：命令
+exit命令退出容器
+</code></pre><ul>
+<li>docker images</li>
+</ul>
+<p>列出已经下载下来的镜像。包含几个字段：</p>
+<pre><code>REPOSITORY TAG IMAGE ID CREATED SIZE
+</code></pre><ul>
+<li>命令举例：docker run –name webserver -d -p 80:80 nginx</li>
+</ul>
+<p>在nginx镜像上运行一个容器，命名为webserver。-d代表后台运行并输出容器ID，-p映射端口80</p>
+<p>启动这个容器后，可以通过exec进入容器修改内容</p>
+<ul>
+<li>docker exec -it webserver bash</li>
+</ul>
+<p>进入后可以执行：cat /etc/os-release  查看系统版本。apt-get update    apt-get install vim    这两条命令可以安装vim。上述即是对容器做了改动，执行：</p>
+<ul>
+<li>docker diff webserver</li>
+</ul>
+<p>查看都有哪些变化</p>
+<ul>
+<li>docker commit –author “wxf” –message “修改了默认网页” webserver nginx:v2      </li>
+</ul>
+<p>运行容器时候做的一些修改会记录到容器存储层，commit可以将存储层保存成新的镜像（nginx:v2 代表 仓库名：标签）</p>
+<ul>
+<li>docker rmi 镜像ID</li>
+</ul>
+<p>删除镜像</p>
+<ul>
+<li>docker stop 容器ID</li>
+</ul>
+<p>终止容器</p>
+<ul>
+<li>docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]   </li>
+</ul>
+<p>修改镜像tag</p>
 
       
     </div>
@@ -395,6 +446,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
+        </div>
+      
 
       
       
@@ -404,8 +461,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/13/建造者模式/" rel="next" title="建造者模式">
-                <i class="fa fa-chevron-left"></i> 建造者模式
+              <a href="/2016/10/14/代理模式/" rel="next" title="代理模式">
+                <i class="fa fa-chevron-left"></i> 代理模式
               </a>
             
           </div>
@@ -413,10 +470,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/10/22/docker 常用命令/" rel="prev" title="docker 常用命令">
-                docker 常用命令 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -468,8 +521,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <p class="site-author-name" itemprop="name">能孩子</p>
@@ -548,6 +610,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#镜像"><span class="nav-number">1.</span> <span class="nav-text">镜像</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
