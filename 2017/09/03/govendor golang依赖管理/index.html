@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="go," />
 
 
 
@@ -95,17 +95,18 @@
 
 
 
-<meta name="description" content="工厂方法模式抽象工厂模式">
+<meta name="description" content="golang 项目默认从$GOPATH中查找依赖，不同用户不同时间从外部获取的依赖版本可能不同。 govendor工具将项目依赖的外部包放到项目下的 vendor 目录下，通过 vendor.json 文件来记录依赖包的版本。 govendor 安装go get -u -v github.com/kardianos/govendor golang包类型如下   状态 缩写 含义     +loca">
+<meta name="keywords" content="go">
 <meta property="og:type" content="article">
-<meta property="og:title" content="工厂模式">
-<meta property="og:url" content="http://boyneng.com/2016/10/12/工厂模式/index.html">
+<meta property="og:title" content="govendor golang依赖管理">
+<meta property="og:url" content="http://boyneng.com/2017/09/03/govendor golang依赖管理/index.html">
 <meta property="og:site_name" content="能孩子">
-<meta property="og:description" content="工厂方法模式抽象工厂模式">
+<meta property="og:description" content="golang 项目默认从$GOPATH中查找依赖，不同用户不同时间从外部获取的依赖版本可能不同。 govendor工具将项目依赖的外部包放到项目下的 vendor 目录下，通过 vendor.json 文件来记录依赖包的版本。 govendor 安装go get -u -v github.com/kardianos/govendor golang包类型如下   状态 缩写 含义     +loca">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-31T15:48:48.000Z">
+<meta property="og:updated_time" content="2017-09-03T08:45:46.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="工厂模式">
-<meta name="twitter:description" content="工厂方法模式抽象工厂模式">
+<meta name="twitter:title" content="govendor golang依赖管理">
+<meta name="twitter:description" content="golang 项目默认从$GOPATH中查找依赖，不同用户不同时间从外部获取的依赖版本可能不同。 govendor工具将项目依赖的外部包放到项目下的 vendor 目录下，通过 vendor.json 文件来记录依赖包的版本。 govendor 安装go get -u -v github.com/kardianos/govendor golang包类型如下   状态 缩写 含义     +loca">
 
 
 
@@ -135,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://boyneng.com/2016/10/12/工厂模式/"/>
+  <link rel="canonical" href="http://boyneng.com/2017/09/03/govendor golang依赖管理/"/>
 
 
 
 
 
-  <title>工厂模式 | 能孩子</title>
+  <title>govendor golang依赖管理 | 能孩子</title>
   
 
 
@@ -278,7 +279,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2016/10/12/工厂模式/">
+    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2017/09/03/govendor golang依赖管理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="能孩子">
@@ -295,7 +296,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">工厂模式</h1>
+          <h1 class="post-title" itemprop="name headline">govendor golang依赖管理</h1>
         
 
         <div class="post-meta">
@@ -307,8 +308,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-12T13:38:25+08:00">
-                2016-10-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-03T11:33:02+08:00">
+                2017-09-03
               </time>
             
 
@@ -317,28 +318,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/美女/" itemprop="url" rel="index">
-                    <span itemprop="name">美女</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -367,7 +346,80 @@
       
 
       
-        <h3 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h3><h3 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h3>
+        <p>golang 项目默认从$GOPATH中查找依赖，不同用户不同时间从外部获取的依赖版本可能不同。</p>
+<p>govendor工具将项目依赖的外部包放到项目下的 vendor 目录下，通过 vendor.json 文件来记录依赖包的版本。</p>
+<h4 id="govendor-安装"><a href="#govendor-安装" class="headerlink" title="govendor 安装"></a>govendor 安装</h4><pre><code>go get -u -v github.com/kardianos/govendor
+</code></pre><h4 id="golang包类型如下"><a href="#golang包类型如下" class="headerlink" title="golang包类型如下"></a>golang包类型如下</h4><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>缩写</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+local</td>
+<td>l</td>
+<td>本地包，即项目自身的包组织</td>
+</tr>
+<tr>
+<td>+external</td>
+<td>e</td>
+<td>外部包，在$GOPATH中，但不在vendor目录下</td>
+</tr>
+<tr>
+<td>+vendor</td>
+<td>v</td>
+<td>被govendor管理，即在vendor目录下</td>
+</tr>
+<tr>
+<td>+std</td>
+<td>s</td>
+<td>标准库中的包</td>
+</tr>
+<tr>
+<td>+unused</td>
+<td>u</td>
+<td>未使用的包，即包在vendor目录下，但项目并没有用到</td>
+</tr>
+<tr>
+<td>+missing</td>
+<td>m</td>
+<td>代码引用了依赖包，但该包并没有找到</td>
+</tr>
+<tr>
+<td>+program</td>
+<td>p</td>
+<td>主程序包，意味着可以编译为执行文件</td>
+</tr>
+<tr>
+<td>+outside</td>
+<td></td>
+<td>外部包和缺失的包</td>
+</tr>
+<tr>
+<td>+all</td>
+<td></td>
+<td>所有的包</td>
+</tr>
+</tbody>
+</table>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>项目中引用了外部包，在项目根目录下执行</p>
+<pre><code>govendor init
+</code></pre><p>来初始化vendor 目录，会生成一个vendor目录，目录中有一个vendor.json文件，用来存放项目依赖信息。执行</p>
+<pre><code>govendor add +external
+</code></pre><p>将项目所有依赖信息添加至vendor.json文件中。</p>
+<pre><code>govendor add PKG_PATH  //添加指定包路径信息
+</code></pre><p>其他命令：</p>
+<ul>
+<li>govendor list 列出所有依赖</li>
+<li>govendor update 从$GOPATH更新依赖包到vendor目录</li>
+<li>govendor remove 从 vendor 管理中删除依赖</li>
+<li>govendor sync 本地存在 vendor.json 时候拉去依赖包，匹配所记录的版本</li>
+<li>govendor get 拉取依赖包到 vendor 目录</li>
+</ul>
+
       
     </div>
     
@@ -416,6 +468,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/go/" rel="tag"># go</a>
+          
+        </div>
+      
 
       
       
@@ -425,8 +483,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/12/单例模式/" rel="next" title="单例模式">
-                <i class="fa fa-chevron-left"></i> 单例模式
+              <a href="/2016/10/22/docker 常用命令/" rel="next" title="docker 常用命令">
+                <i class="fa fa-chevron-left"></i> docker 常用命令
               </a>
             
           </div>
@@ -434,10 +492,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/10/13/适配器模式/" rel="prev" title="适配器模式">
-                适配器模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -588,7 +642,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法模式"><span class="nav-number">1.</span> <span class="nav-text">工厂方法模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象工厂模式"><span class="nav-number">2.</span> <span class="nav-text">抽象工厂模式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#govendor-安装"><span class="nav-number">1.</span> <span class="nav-text">govendor 安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#golang包类型如下"><span class="nav-number">2.</span> <span class="nav-text">golang包类型如下</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用"><span class="nav-number">3.</span> <span class="nav-text">使用</span></a></li></ol></div>
             
 
           </div>
