@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="docker," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -95,18 +95,17 @@
 
 
 
-<meta name="description" content="镜像 docker pull [选项] [Docker Registry地址]&amp;lt;仓库名&amp;gt;:&amp;lt;标签&amp;gt; docker pull ubuntu:14.04  上面的命令中没有给出 Docker Registry 地址，因此将会从 Docker Hub 获取镜像。而镜像名称是 ubuntu:14.04，因此将会获取官方镜像 library/ubuntu 仓库中标签为 14.04 的">
-<meta name="keywords" content="docker">
+<meta name="description" content="channel 用于多个goroutine间发送和接受共享的数据，达到数据共享的目的。 ch:=make(chan int) //默认大小0，无缓冲channel ch:=make(chan int, 2) // 有缓冲channel close(ch) //关闭channel后不能往channel发送数据，可以接收数据 cap(ch) //channel的最大容量 len(ch) // chan">
 <meta property="og:type" content="article">
-<meta property="og:title" content="docker 常用命令">
-<meta property="og:url" content="http://boyneng.com/2016/10/22/docker 常用命令/index.html">
+<meta property="og:title" content="能孩子">
+<meta property="og:url" content="http://boyneng.com/2017/09/10/Go channel/index.html">
 <meta property="og:site_name" content="能孩子">
-<meta property="og:description" content="镜像 docker pull [选项] [Docker Registry地址]&amp;lt;仓库名&amp;gt;:&amp;lt;标签&amp;gt; docker pull ubuntu:14.04  上面的命令中没有给出 Docker Registry 地址，因此将会从 Docker Hub 获取镜像。而镜像名称是 ubuntu:14.04，因此将会获取官方镜像 library/ubuntu 仓库中标签为 14.04 的">
+<meta property="og:description" content="channel 用于多个goroutine间发送和接受共享的数据，达到数据共享的目的。 ch:=make(chan int) //默认大小0，无缓冲channel ch:=make(chan int, 2) // 有缓冲channel close(ch) //关闭channel后不能往channel发送数据，可以接收数据 cap(ch) //channel的最大容量 len(ch) // chan">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-03T09:43:52.000Z">
+<meta property="og:updated_time" content="2017-09-11T16:01:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="docker 常用命令">
-<meta name="twitter:description" content="镜像 docker pull [选项] [Docker Registry地址]&amp;lt;仓库名&amp;gt;:&amp;lt;标签&amp;gt; docker pull ubuntu:14.04  上面的命令中没有给出 Docker Registry 地址，因此将会从 Docker Hub 获取镜像。而镜像名称是 ubuntu:14.04，因此将会获取官方镜像 library/ubuntu 仓库中标签为 14.04 的">
+<meta name="twitter:title" content="能孩子">
+<meta name="twitter:description" content="channel 用于多个goroutine间发送和接受共享的数据，达到数据共享的目的。 ch:=make(chan int) //默认大小0，无缓冲channel ch:=make(chan int, 2) // 有缓冲channel close(ch) //关闭channel后不能往channel发送数据，可以接收数据 cap(ch) //channel的最大容量 len(ch) // chan">
 
 
 
@@ -136,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://boyneng.com/2016/10/22/docker 常用命令/"/>
+  <link rel="canonical" href="http://boyneng.com/2017/09/10/Go channel/"/>
 
 
 
 
 
-  <title>docker 常用命令 | 能孩子</title>
+  <title> | 能孩子</title>
   
 
 
@@ -279,7 +278,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2016/10/22/docker 常用命令/">
+    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2017/09/10/Go channel/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="能孩子">
@@ -296,7 +295,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">docker 常用命令</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -308,8 +307,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-22T11:33:02+08:00">
-                2016-10-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-10T23:14:04+08:00">
+                2017-09-10
               </time>
             
 
@@ -346,45 +345,16 @@
       
 
       
-        <h4 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h4><ul>
-<li>docker pull [选项] [Docker Registry地址]&lt;仓库名&gt;:&lt;标签&gt;</li>
-<li>docker pull ubuntu:14.04</li>
-</ul>
-<p>上面的命令中没有给出 Docker Registry 地址，因此将会从 Docker Hub 获取镜像。而镜像名称是 ubuntu:14.04，因此将会获取官方镜像 library/ubuntu 仓库中标签为 14.04 的镜像。</p>
-<ul>
-<li>在某个镜像的基础上运行容器</li>
-<li>命令举例：docker run -it –rm ubuntu:14.04 bash</li>
-</ul>
-<p><em>每次执行 docker run  命令都会创建新的容器，建议一次创建后，使用 docker start/stop  来启动和停用容器。</em></p>
-<pre><code>-i：交互式操作   
--t：终端    
---rm: 容器退出后随之将其删除    
-ubuntu:14.04：表示用这个镜像为基础启动容器
-bash：命令
-exit命令退出容器
-</code></pre><ul>
-<li>docker images</li>
-</ul>
-<p>列出已经下载下来的镜像。包含几个字段：</p>
-<pre><code>REPOSITORY TAG IMAGE ID CREATED SIZE
-</code></pre><ul>
-<li>命令举例：docker run –name webserver -d -p 80:80 nginx</li>
-</ul>
-<p>在nginx镜像上运行一个容器，命名为webserver。-d代表后台运行并输出容器ID，-p映射端口80</p>
-<p>启动这个容器后，可以通过exec进入容器修改内容</p>
-<ul>
-<li>docker exec -it webserver bash</li>
-</ul>
-<p>进入后可以执行：cat /etc/os-release  查看系统版本。apt-get update    apt-get install vim    这两条命令可以安装vim。上述即是对容器做了改动，执行：</p>
-<ul>
-<li>docker diff webserver</li>
-</ul>
-<p>查看都有哪些变化</p>
-<ul>
-<li>docker commit –author “wxf” –message “修改了默认网页” webserver nginx:v2      </li>
-</ul>
-<p>运行容器时候做的一些修改会记录到容器存储层，commit可以将存储层保存成新的镜像（nginx:v2 代表 仓库名：标签）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">docker tag hyperledger/fabric-ca:x86_64-1.0.1 hyperledger/fabric-ca:latest  </div><div class="line">docker stop 容器ID</div><div class="line">docker stop $(docker ps -aq)</div><div class="line">docker rm $(docker ps -aq)   //删除所有容器</div><div class="line">docker rmi 镜像ID</div></pre></td></tr></table></figure>
+        <p>channel 用于多个goroutine间发送和接受共享的数据，达到数据共享的目的。</p>
+<pre><code>ch:=make(chan int) //默认大小0，无缓冲channel
+ch:=make(chan int, 2) // 有缓冲channel
+close(ch) //关闭channel后不能往channel发送数据，可以接收数据
+cap(ch) //channel的最大容量
+len(ch) // channel现有元素个数
+</code></pre><p>无缓冲channel不能保存任何值。有缓冲channel是一个容量为n的队列。当队列满的时候，向channel发送数据会阻塞，当队列空的时候，接收数据会阻塞，</p>
+<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4><p>使用两个goroutine交替打印序列，一个goroutinue打印数字， 另外一个goroutine打印字母， 最终效果如下 12AB34CD56EF78GH910IJ。</p>
+<p>问题很简单，使用 channel 来控制打印的进度。使用两个 channel ，来分别控制数字和字母的打印序列， 数字打印完成后通过 channel 通知字母打印, 字母打印完成后通知数字打印，然后周而复始的工作。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    runtime.GOMAXPROCS(runtime.NumCPU())</div><div class="line">    chan_n := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">bool</span>)</div><div class="line">    chan_c := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">bool</span>, <span class="number">1</span>)</div><div class="line">    done := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;)</div><div class="line"></div><div class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">for</span> i := <span class="number">1</span>; i &lt; <span class="number">11</span>; i += <span class="number">2</span> &#123;</div><div class="line">            &lt;-chan_c</div><div class="line">            fmt.Print(i)</div><div class="line">            fmt.Print(i + <span class="number">1</span>)</div><div class="line">            chan_n &lt;- <span class="literal">true</span></div><div class="line">        &#125;</div><div class="line">    &#125;()</div><div class="line"></div><div class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">        char_seq := []<span class="keyword">string</span>&#123;<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>, <span class="string">"D"</span>, <span class="string">"E"</span>, <span class="string">"F"</span>, <span class="string">"G"</span>, <span class="string">"H"</span>, <span class="string">"I"</span>, <span class="string">"J"</span>, <span class="string">"K"</span>&#125;</div><div class="line">        <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i += <span class="number">2</span> &#123;</div><div class="line">            &lt;-chan_n</div><div class="line">            fmt.Print(char_seq[i])</div><div class="line">            fmt.Print(char_seq[i+<span class="number">1</span>])</div><div class="line">            chan_c &lt;- <span class="literal">true</span></div><div class="line">        &#125;</div><div class="line">        done &lt;- <span class="keyword">struct</span>&#123;&#125;&#123;&#125;</div><div class="line">    &#125;()</div><div class="line"></div><div class="line">    chan_c &lt;- <span class="literal">true</span></div><div class="line">    &lt;-done</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -434,12 +404,6 @@ exit命令退出容器
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/docker/" rel="tag"># docker</a>
-          
-        </div>
-      
 
       
       
@@ -449,8 +413,8 @@ exit命令退出容器
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/14/代理模式/" rel="next" title="代理模式">
-                <i class="fa fa-chevron-left"></i> 代理模式
+              <a href="/2017/09/03/Golang 基础/" rel="next" title="Golang 基础">
+                <i class="fa fa-chevron-left"></i> Golang 基础
               </a>
             
           </div>
@@ -458,10 +422,6 @@ exit命令退出容器
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/03/govendor golang依赖管理/" rel="prev" title="govendor Golang依赖管理">
-                govendor Golang依赖管理 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -612,7 +572,7 @@ exit命令退出容器
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#镜像"><span class="nav-number">1.</span> <span class="nav-text">镜像</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#实战"><span class="nav-number">1.</span> <span class="nav-text">实战</span></a></li></ol></div>
             
 
           </div>
