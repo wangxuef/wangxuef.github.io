@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="mac,tip,linux," />
+  <meta name="keywords" content="java,Tomcat,javaWeb," />
 
 
 
@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="命令esc模式下光标移动 w -&amp;gt; one word b &amp;lt;- one word f+ -&amp;gt; 下一个字符 F+* t+ -&amp;gt; 下一个字符的前一个字符 T+* gg -&amp;gt; 文件头 123gg  跳到123行 G -&amp;gt; 文件末尾 0 -&amp;gt; 行头 $ -&amp;gt; 行尾 星号 -&amp;gt; 下一个相同单词 井号 -&amp;gt; 上一个相同单词  改动 . 重复上一个命令">
-<meta name="keywords" content="mac,tip,linux">
+<meta name="description" content="Tomcat 实现了Servlet规范、JSP规范，支持对这两者的解析，还支持JSTL表达式语言、和Java WebSocket。相对于apache/nginx服务器(web server)，Tomcat属于Web容器(Web Container). 类似的Web容器还有Jetty, Resin等。 容器是参与管理内部事物整个生命周期的，比如Tomcat负责整个Servlet的生命周期(LifeC">
+<meta name="keywords" content="java,Tomcat,javaWeb">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vim">
-<meta property="og:url" content="http://boyneng.com/2015/12/11/vim/index.html">
+<meta property="og:title" content="Tomcat 概述">
+<meta property="og:url" content="http://boyneng.com/2017/09/08/tomcat概述/index.html">
 <meta property="og:site_name" content="能孩子">
-<meta property="og:description" content="命令esc模式下光标移动 w -&amp;gt; one word b &amp;lt;- one word f+ -&amp;gt; 下一个字符 F+* t+ -&amp;gt; 下一个字符的前一个字符 T+* gg -&amp;gt; 文件头 123gg  跳到123行 G -&amp;gt; 文件末尾 0 -&amp;gt; 行头 $ -&amp;gt; 行尾 星号 -&amp;gt; 下一个相同单词 井号 -&amp;gt; 上一个相同单词  改动 . 重复上一个命令">
+<meta property="og:description" content="Tomcat 实现了Servlet规范、JSP规范，支持对这两者的解析，还支持JSTL表达式语言、和Java WebSocket。相对于apache/nginx服务器(web server)，Tomcat属于Web容器(Web Container). 类似的Web容器还有Jetty, Resin等。 容器是参与管理内部事物整个生命周期的，比如Tomcat负责整个Servlet的生命周期(LifeC">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-03T07:09:53.000Z">
+<meta property="og:updated_time" content="2017-10-24T03:24:05.330Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="vim">
-<meta name="twitter:description" content="命令esc模式下光标移动 w -&amp;gt; one word b &amp;lt;- one word f+ -&amp;gt; 下一个字符 F+* t+ -&amp;gt; 下一个字符的前一个字符 T+* gg -&amp;gt; 文件头 123gg  跳到123行 G -&amp;gt; 文件末尾 0 -&amp;gt; 行头 $ -&amp;gt; 行尾 星号 -&amp;gt; 下一个相同单词 井号 -&amp;gt; 上一个相同单词  改动 . 重复上一个命令">
+<meta name="twitter:title" content="Tomcat 概述">
+<meta name="twitter:description" content="Tomcat 实现了Servlet规范、JSP规范，支持对这两者的解析，还支持JSTL表达式语言、和Java WebSocket。相对于apache/nginx服务器(web server)，Tomcat属于Web容器(Web Container). 类似的Web容器还有Jetty, Resin等。 容器是参与管理内部事物整个生命周期的，比如Tomcat负责整个Servlet的生命周期(LifeC">
 
 
 
@@ -136,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://boyneng.com/2015/12/11/vim/"/>
+  <link rel="canonical" href="http://boyneng.com/2017/09/08/tomcat概述/"/>
 
 
 
 
 
-  <title>vim | 能孩子</title>
+  <title>Tomcat 概述 | 能孩子</title>
   
 
 
@@ -279,7 +279,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2015/12/11/vim/">
+    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2017/09/08/tomcat概述/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="能孩子">
@@ -296,7 +296,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">vim</h1>
+          <h1 class="post-title" itemprop="name headline">Tomcat 概述</h1>
         
 
         <div class="post-meta">
@@ -308,8 +308,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-12-11T14:33:12+08:00">
-                2015-12-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-08T20:13:02+08:00">
+                2017-09-08
               </time>
             
 
@@ -346,36 +346,17 @@
       
 
       
-        <h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><h3 id="esc模式下"><a href="#esc模式下" class="headerlink" title="esc模式下"></a>esc模式下</h3><h4 id="光标移动"><a href="#光标移动" class="headerlink" title="光标移动"></a>光标移动</h4><ul>
-<li>w -&gt; one word</li>
-<li>b &lt;- one word</li>
-<li>f+<em> -&gt; 下一个</em>字符</li>
-<li>F+*</li>
-<li>t+<em> -&gt; 下一个</em>字符的前一个字符</li>
-<li>T+*</li>
-<li>gg -&gt; 文件头</li>
-<li>123gg  跳到123行</li>
-<li>G -&gt; 文件末尾</li>
-<li>0 -&gt; 行头</li>
-<li>$ -&gt; 行尾</li>
-<li>星号 -&gt; 下一个相同单词</li>
-<li>井号 -&gt; 上一个相同单词</li>
-</ul>
-<h4 id="改动"><a href="#改动" class="headerlink" title="改动"></a>改动</h4><ul>
-<li>. 重复上一个命令</li>
-<li>o 在当前行后插入新的一行</li>
-<li>O 在当前行前插入新的一行</li>
-<li>yy 复制一行</li>
-<li>p 粘贴,在当前位置之后 10p 粘贴10次</li>
-<li>P 粘贴，在当前位置之前</li>
-<li>dd 删除一行 10dd 删除10行</li>
-<li>x 删除一个字符</li>
-<li>dw 删除一个word</li>
-<li>df+<em> 删除至下一个</em>字符</li>
-</ul>
-<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><ul>
-<li>:set nu  显示行号</li>
-</ul>
+        <p>Tomcat 实现了Servlet规范、JSP规范，支持对这两者的解析，还支持JSTL表达式语言、和Java WebSocket。相对于apache/nginx服务器(web server)，Tomcat属于Web容器(Web Container). 类似的Web容器还有Jetty, Resin等。</p>
+<p>容器是参与管理内部事物整个生命周期的，比如Tomcat负责整个Servlet的生命周期(LifeCycle),包含什么时候创建Servlet,什么时候初始化内部的一些资源，请求处理的时候执行什么方法，什么时候销毁等。类似的，Spring的Ioc容器管理整个Spring Bean的生命周期。而像Apache之类的Web服务器只能处理HTTP协议，例如我们在请求HTML,图片等这些静态资源的时候，可以通过Web服务器来完成。</p>
+<p>两者的区别就是Tomcat不仅可以用于处理动态资源，处理Servlet、JSP，也能处理静态资源，而Apache只能处理静态资源。</p>
+<h3 id="Tomcat目录结构"><a href="#Tomcat目录结构" class="headerlink" title="Tomcat目录结构"></a>Tomcat目录结构</h3><pre><code>bin: 存放一些启动停止的脚本文件
+conf: 配置文件
+lib: Tomcat依赖的一些类库
+logs: 存放运行过程中生成的日志文件
+webapps: 存放需要Tomcat运行的web应用
+work: 存放运行过程中jsp编译生成的java文件，和class文件
+</code></pre><p>我们自己创建的web应用都会有个web.xml配置文件，而在tomcat的conf目录下也有个web.xml文件，其作用是此Tomcat内的所有Web应用的全局配置文件。</p>
+<p>web.xml中有一些默认配置。处理静态资源的DefautServlet，处理JSP文件的JspServlet，session默认超时时间30分钟，请求一个应用的根目录时，会默认显示首页（index.jsp, index.html,index.htm)。当然，web应用自身的web.xml优先级要更高。</p>
 
       
     </div>
@@ -427,11 +408,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/mac/" rel="tag"># mac</a>
+            <a href="/tags/java/" rel="tag"># java</a>
           
-            <a href="/tags/tip/" rel="tag"># tip</a>
+            <a href="/tags/Tomcat/" rel="tag"># Tomcat</a>
           
-            <a href="/tags/linux/" rel="tag"># linux</a>
+            <a href="/tags/javaWeb/" rel="tag"># javaWeb</a>
           
         </div>
       
@@ -444,8 +425,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2013/11/11/装饰者模式/" rel="next" title="装饰模式">
-                <i class="fa fa-chevron-left"></i> 装饰模式
+              <a href="/2017/09/06/Go channel/" rel="next" title="Go channel">
+                <i class="fa fa-chevron-left"></i> Go channel
               </a>
             
           </div>
@@ -453,10 +434,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/11/my macOS command/" rel="prev" title="macOS command">
-                macOS command <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -607,7 +584,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#命令"><span class="nav-number">1.</span> <span class="nav-text">命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#esc模式下"><span class="nav-number">1.1.</span> <span class="nav-text">esc模式下</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#光标移动"><span class="nav-number">1.1.1.</span> <span class="nav-text">光标移动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#改动"><span class="nav-number">1.1.2.</span> <span class="nav-text">改动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他"><span class="nav-number">1.1.3.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tomcat目录结构"><span class="nav-number">1.</span> <span class="nav-text">Tomcat目录结构</span></a></li></ol></div>
             
 
           </div>
