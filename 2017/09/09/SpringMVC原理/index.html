@@ -99,12 +99,13 @@
 <meta name="keywords" content="Java,JavaWeb,Spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringMVC 原理">
-<meta property="og:url" content="http://boyneng.com/2017/09/09/SpringMVC 原理/index.html">
+<meta property="og:url" content="http://boyneng.com/2017/09/09/SpringMVC原理/index.html">
 <meta property="og:site_name" content="能孩子">
 <meta property="og:description" content="核心类 DispatcherServlet 客户端发送一个url请求被服务器接收后，都会被注册在web.xml中的DispatcherServlet接收，DispatcherServlet的本质是Servlet，其作用就是接受和转发web请求到内部框架处理单元（controller）。 上图可以看出DispatcherServlet的继承关系，Servlet的生命周期包含三部分：init、serv">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://oedjneuvz.bkt.clouddn.com/DispatcherServlet-UML.png">
-<meta property="og:updated_time" content="2017-10-24T13:54:47.577Z">
+<meta property="og:image" content="http://boyneng.com/2017/09/09/SpringMVC原理/HttpServletBean-init-method.png">
+<meta property="og:updated_time" content="2017-10-24T14:56:51.630Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringMVC 原理">
 <meta name="twitter:description" content="核心类 DispatcherServlet 客户端发送一个url请求被服务器接收后，都会被注册在web.xml中的DispatcherServlet接收，DispatcherServlet的本质是Servlet，其作用就是接受和转发web请求到内部框架处理单元（controller）。 上图可以看出DispatcherServlet的继承关系，Servlet的生命周期包含三部分：init、serv">
@@ -138,7 +139,7 @@
 
 
 
-  <link rel="canonical" href="http://boyneng.com/2017/09/09/SpringMVC 原理/"/>
+  <link rel="canonical" href="http://boyneng.com/2017/09/09/SpringMVC原理/"/>
 
 
 
@@ -281,7 +282,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2017/09/09/SpringMVC 原理/">
+    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2017/09/09/SpringMVC原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="能孩子">
@@ -350,7 +351,8 @@
       
         <h3 id="核心类-DispatcherServlet"><a href="#核心类-DispatcherServlet" class="headerlink" title="核心类 DispatcherServlet"></a>核心类 DispatcherServlet</h3><p><img src="http://oedjneuvz.bkt.clouddn.com/DispatcherServlet-UML.png" alt=""></p>
 <p>客户端发送一个url请求被服务器接收后，都会被注册在web.xml中的DispatcherServlet接收，DispatcherServlet的本质是Servlet，其作用就是接受和转发web请求到内部框架处理单元（controller）。</p>
-<p>上图可以看出DispatcherServlet的继承关系，Servlet的生命周期包含三部分：init、service、destroy。而DispatcherServlet的init方法定义在父类</p>
+<p>上图可以看出DispatcherServlet的继承关系，Servlet的生命周期包含三部分：init、service、destroy。而DispatcherServlet的init方法定义在父类HttpServletBean中，且该方法为final。</p>
+<img src="/2017/09/09/SpringMVC原理/HttpServletBean-init-method.png" alt="HttpServletBean init方法" title="HttpServletBean init方法">
 
       
     </div>
