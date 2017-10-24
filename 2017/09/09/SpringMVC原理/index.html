@@ -105,7 +105,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://oedjneuvz.bkt.clouddn.com/DispatcherServlet-UML.png">
 <meta property="og:image" content="http://boyneng.com/2017/09/09/SpringMVC原理/HttpServletBean-init-method.png">
-<meta property="og:updated_time" content="2017-10-24T23:33:10.454Z">
+<meta property="og:updated_time" content="2017-10-24T23:52:28.268Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringMVC原理">
 <meta name="twitter:description" content="核心类 DispatcherServlet 客户端发送一个url请求被服务器接收后，都会被注册在web.xml中的DispatcherServlet接收，DispatcherServlet的本质是Servlet，其作用就是接受和转发web请求到内部框架处理单元（controller）。 上图可以看出DispatcherServlet的继承关系，Servlet的生命周期包含三部分：init、serv">
@@ -378,6 +378,11 @@
 <li>最后，将这个上下文发布到ServletContext中，也就是将上下文以一个和Servlet类在web.xml中注册名字有关的值为键，设置为ServletContext的一个属性。你可以通过改变publishContext的值来决定是否发布到ServletContext中，默认为true。</li>
 </ul>
 <p>以上面6点跟踪FrameworkServlet类中的代码，可以比较清晰的了解到整个容器上下文的建立过程，也就能够领会到FrameworkServlet类的设计目的，它是用来建立一个和Servlet关联的Spring容器上下文，并将其注册到ServletContext中的。跳脱开SpringMVC体系，我们也能通过继承FrameworkServlet类，得到与Spring容器整合的好处，FrameworkServlet和HttpServletBean一样，是一个可以独立使用的类。整个SpringMVC设计中，处处体现开闭原则，这里显然也是其中一点。</p>
+<h4 id="初始化SpringMVC默认实现类"><a href="#初始化SpringMVC默认实现类" class="headerlink" title="初始化SpringMVC默认实现类"></a>初始化SpringMVC默认实现类</h4><p>容器上下文的建立即为WebApplicationContext的建立过程，通过调用onRefresh方法，继续进入到DispatcherServlet类中（因为FrameworkServlet中的onRefresh方法没有具体实现，而DispatcherServlet重写了该方法）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onRefresh</span><span class="params">(ApplicationContext context)</span> </span>&#123;</div><div class="line">    initStrategies(context);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initStrategies</span><span class="params">(ApplicationContext context)</span> </span>&#123;</div><div class="line">    initMultipartResolver(context);</div><div class="line">    initLocaleResolver(context);</div><div class="line">    initThemeResolver(context);</div><div class="line">    initHandlerMappings(context);</div><div class="line">    initHandlerAdapters(context);</div><div class="line">    initHandlerExceptionResolvers(context);</div><div class="line">    initRequestToViewNameTranslator(context);</div><div class="line">    initViewResolvers(context);</div><div class="line">    initFlashMapManager(context);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上述代码为DispatcherServlet中的onRefresh方法，具体的初始化策略，在initStrategies()方法中封装，提供了SpringMVC各种编程元素的初始化。这些编程元素，都是作为容器上下文中一个个bean而存在的。</p>
+<hr>
+<p>回顾整个SpringMVC的初始化流程，我们看到，通过HttpServletBean、FrameworkServlet、DispatcherServlet三个不同的类层次，SpringMVC的设计者将三种不同的职责分别抽象，运用模版方法设计模式分别固定在三个类层次中。其中HttpServletBean完成的是<init-param>配置元素的依赖注入，FrameworkServlet完成的是容器上下文的建立，DispatcherServlet完成的是SpringMVC具体编程元素的初始化策略。</init-param></p>
 
       
     </div>
@@ -609,7 +614,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#核心类-DispatcherServlet"><span class="nav-number">1.</span> <span class="nav-text">核心类 DispatcherServlet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DispatcherServlet的初始化"><span class="nav-number">1.1.</span> <span class="nav-text">DispatcherServlet的初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#init-param-元素读取"><span class="nav-number">1.1.1.</span> <span class="nav-text">init-param 元素读取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#容器上下文的建立"><span class="nav-number">1.1.2.</span> <span class="nav-text">容器上下文的建立</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#核心类-DispatcherServlet"><span class="nav-number">1.</span> <span class="nav-text">核心类 DispatcherServlet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DispatcherServlet的初始化"><span class="nav-number">1.1.</span> <span class="nav-text">DispatcherServlet的初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#init-param-元素读取"><span class="nav-number">1.1.1.</span> <span class="nav-text">init-param 元素读取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#容器上下文的建立"><span class="nav-number">1.1.2.</span> <span class="nav-text">容器上下文的建立</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化SpringMVC默认实现类"><span class="nav-number">1.1.3.</span> <span class="nav-text">初始化SpringMVC默认实现类</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
