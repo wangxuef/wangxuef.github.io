@@ -278,6 +278,198 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2017/09/03/govendor golang依赖管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="能孩子">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="能孩子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/03/govendor golang依赖管理/" itemprop="url">govendor Golang依赖管理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-03T11:33:02+08:00">
+                2017-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>golang 项目默认从$GOPATH中查找依赖，不同用户不同时间从外部获取的依赖版本可能不同。</p>
+<p>govendor工具将项目依赖的外部包放到项目下的 vendor 目录下，通过 vendor.json 文件来记录依赖包的版本。</p>
+<h4 id="govendor-安装"><a href="#govendor-安装" class="headerlink" title="govendor 安装"></a>govendor 安装</h4><pre><code>go get -u -v github.com/kardianos/govendor
+</code></pre><h4 id="golang包类型如下"><a href="#golang包类型如下" class="headerlink" title="golang包类型如下"></a>golang包类型如下</h4><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>缩写</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+local</td>
+<td>l</td>
+<td>本地包，即项目自身的包组织</td>
+</tr>
+<tr>
+<td>+external</td>
+<td>e</td>
+<td>外部包，在$GOPATH中，但不在vendor目录下</td>
+</tr>
+<tr>
+<td>+vendor</td>
+<td>v</td>
+<td>被govendor管理，即在vendor目录下</td>
+</tr>
+<tr>
+<td>+std</td>
+<td>s</td>
+<td>标准库中的包</td>
+</tr>
+<tr>
+<td>+unused</td>
+<td>u</td>
+<td>未使用的包，即包在vendor目录下，但项目并没有用到</td>
+</tr>
+<tr>
+<td>+missing</td>
+<td>m</td>
+<td>代码引用了依赖包，但该包并没有找到</td>
+</tr>
+<tr>
+<td>+program</td>
+<td>p</td>
+<td>主程序包，意味着可以编译为执行文件</td>
+</tr>
+<tr>
+<td>+outside</td>
+<td></td>
+<td>外部包和缺失的包</td>
+</tr>
+<tr>
+<td>+all</td>
+<td></td>
+<td>所有的包</td>
+</tr>
+</tbody>
+</table>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>项目中引用了外部包，在项目根目录下执行</p>
+<pre><code>govendor init
+</code></pre><p>来初始化vendor 目录，会生成一个vendor目录，目录中有一个vendor.json文件，用来存放项目依赖信息。执行</p>
+<pre><code>govendor add +external
+</code></pre><p>将项目所有依赖信息添加至vendor.json文件中。</p>
+<pre><code>govendor add PKG_PATH  //添加指定包路径信息
+</code></pre><p>其他命令：</p>
+<ul>
+<li>govendor list 列出所有依赖</li>
+<li>govendor update 从$GOPATH更新依赖包到vendor目录</li>
+<li>govendor remove 从 vendor 管理中删除依赖</li>
+<li>govendor sync 本地存在 vendor.json 时候拉去依赖包，匹配所记录的版本</li>
+<li>govendor get 拉取依赖包到 vendor 目录</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://boyneng.com/2016/10/22/docker 常用命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1604,7 +1796,7 @@ exit命令退出容器
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1626,7 +1818,7 @@ exit命令退出容器
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
