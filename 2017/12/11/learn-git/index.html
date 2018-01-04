@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="能孩子">
 <meta property="og:description" content="相关概念HEAD 指向当前分支的最后一次提交git add命令把文件修改添加到暂存区git commit命令把暂存区内容提交到当前分支git diff 是工作区(work dict)和暂存区(stage)的比较git diff --cached 是暂存区(stage)和分支的比较git checkout -- README.md 把该文件工作区的修改全部撤销（只是把工作区的内容撤销）git res">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-12T06:13:22.766Z">
+<meta property="og:updated_time" content="2017-12-27T09:33:53.510Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="learn-git">
 <meta name="twitter:description" content="相关概念HEAD 指向当前分支的最后一次提交git add命令把文件修改添加到暂存区git commit命令把暂存区内容提交到当前分支git diff 是工作区(work dict)和暂存区(stage)的比较git diff --cached 是暂存区(stage)和分支的比较git checkout -- README.md 把该文件工作区的修改全部撤销（只是把工作区的内容撤销）git res">
@@ -364,6 +364,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git log --pretty=oneline --abbrev-commit</div><div class="line">git tag v1.0 commit_id</div><div class="line">git push origin --tags</div></pre></td></tr></table></figure>
 <p>其他操作</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git show v1.0</div><div class="line">git tab -a v1.0 -m &apos;version 1.0&apos; commit_id</div></pre></td></tr></table></figure>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>ubuntu 系统安装 git<br><code>sudo apt install git</code></p>
+<p>相关配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git config --list</div><div class="line">git config --global user.email &quot;wangxuefei@finupgroup.com&quot;</div><div class="line">git config --global user.name  &quot;wangxuefei&quot;</div></pre></td></tr></table></figure>
 <h3 id="git-项目初始化"><a href="#git-项目初始化" class="headerlink" title="git 项目初始化"></a>git 项目初始化</h3><p>本地项目为 test1211，github新建 repository test1211。<br>下一步需要将本地项目与github项目关联起来</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd test1211</div><div class="line">git init</div><div class="line">git add .</div><div class="line">git commit -m &apos;init commit&apos;</div><div class="line">git remote add origin https://github.com/wangxuef/test1211.git</div><div class="line">git push --set-upstream origin master</div></pre></td></tr></table></figure>
 <p>add origin 指的是远程仓库命名为 origin，也可以使用多个名字用来添加多个远程仓库。如：<br><code>git remote add origin2 ......</code>  <code>git remote add origin3 ......</code></p>
@@ -594,7 +597,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#相关概念"><span class="nav-number">1.</span> <span class="nav-text">相关概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分支合并"><span class="nav-number">2.</span> <span class="nav-text">分支合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版本回退"><span class="nav-number">3.</span> <span class="nav-text">版本回退</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-tip"><span class="nav-number">4.</span> <span class="nav-text">git tip</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#git-stash"><span class="nav-number">4.1.</span> <span class="nav-text">git stash</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#替换-master-分支"><span class="nav-number">5.</span> <span class="nav-text">替换 master 分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标签"><span class="nav-number">6.</span> <span class="nav-text">标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-项目初始化"><span class="nav-number">7.</span> <span class="nav-text">git 项目初始化</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#相关概念"><span class="nav-number">1.</span> <span class="nav-text">相关概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分支合并"><span class="nav-number">2.</span> <span class="nav-text">分支合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版本回退"><span class="nav-number">3.</span> <span class="nav-text">版本回退</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-tip"><span class="nav-number">4.</span> <span class="nav-text">git tip</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#git-stash"><span class="nav-number">4.1.</span> <span class="nav-text">git stash</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#替换-master-分支"><span class="nav-number">5.</span> <span class="nav-text">替换 master 分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标签"><span class="nav-number">6.</span> <span class="nav-text">标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">7.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-项目初始化"><span class="nav-number">8.</span> <span class="nav-text">git 项目初始化</span></a></li></ol></div>
             
 
           </div>
@@ -617,7 +620,7 @@
         <div class="copyright" >
   
   &copy;  2016 &mdash; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
