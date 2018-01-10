@@ -278,6 +278,127 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2018/01/09/shell-脚本/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="能孩子">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="能孩子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/09/shell-脚本/" itemprop="url">shell 脚本</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-09T17:57:20+08:00">
+                2018-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"></div><div class="line"><span class="comment">####################################################</span></div><div class="line"><span class="comment">#    构建docker镜像，并push到公司docker私服        #</span></div><div class="line"><span class="comment">#    author ： liujie&lt;liujie@finupgroup.com&gt;       #</span></div><div class="line"><span class="comment">#    date   :  2017-11-14 10:30                    #</span></div><div class="line"><span class="comment">####################################################</span></div><div class="line"></div><div class="line"><span class="comment"># 判断docker是否安装</span></div><div class="line"><span class="keyword">if</span> <span class="built_in">which</span> docker 2&gt;/dev/null; <span class="keyword">then</span></div><div class="line">	<span class="built_in">read</span> -p <span class="string">"please input your userame for harbar.findupgroup.com: "</span> username</div><div class="line">	<span class="built_in">read</span> -p <span class="string">"please input your password for harbar.findupgroup.com: "</span> password</div><div class="line">    <span class="comment"># 删除本地仓库中之前build的镜像</span></div><div class="line">	docker rmi harbor.finupgroup.com/logstash/mongo-logstash:5.6.4</div><div class="line">    </div><div class="line">	docker build -t harbor.finupgroup.com/logstash/mongo-logstash:5.6.4 .</div><div class="line">    <span class="comment">#登录docker私服</span></div><div class="line">    docker login -u <span class="string">"<span class="variable">$&#123;username&#125;</span>"</span> -p <span class="string">"<span class="variable">$&#123;password&#125;</span>"</span> harbor.finupgroup.com</div><div class="line"></div><div class="line">	docker push harbor.finupgroup.com/logstash/mongo-logstash:5.6.4</div><div class="line">	</div><div class="line">	<span class="built_in">echo</span> <span class="string">"push done.."</span></div><div class="line"><span class="keyword">else</span></div><div class="line">  <span class="built_in">echo</span> <span class="string">"nope, no docker installed."</span></div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">rm -rf tesla</div><div class="line">rm -rf quickpayment</div><div class="line"></div><div class="line">path0=<span class="variable">$PWD</span></div><div class="line"><span class="built_in">read</span> -p <span class="string">"please input your userame for harbar.findupgroup.com: "</span> username</div><div class="line"><span class="built_in">read</span> -p <span class="string">"please input your password for harbar.findupgroup.com: "</span> password</div><div class="line"><span class="built_in">read</span> -p <span class="string">"please input your project's git branch: "</span> branch</div><div class="line"></div><div class="line">git <span class="built_in">clone</span> http://gitlab.puhuitech.cn/pulianchu-dev/tesla.git</div><div class="line"><span class="built_in">cd</span> tesla</div><div class="line">git checkout <span class="variable">$&#123;branch&#125;</span></div><div class="line">mvn clean package -P dev -DskipTests</div><div class="line"><span class="built_in">cd</span> web/target</div><div class="line">unzip finup-quickpayment-cloud-server-assembly.zip</div><div class="line">mv finup-quickpayment-cloud-server <span class="variable">$path0</span>/quickpayment</div><div class="line"></div><div class="line"><span class="built_in">cd</span> <span class="variable">$path0</span></div><div class="line">DATE=$(date +%Y-%m-%d-%H-%M-%S)</div><div class="line">dockerTAG=harbor.finupgroup.com/settlement/web:<span class="variable">$DATE</span></div><div class="line">docker build -t <span class="variable">$dockerTAG</span> .</div><div class="line">docker login -u <span class="string">"<span class="variable">$&#123;username&#125;</span>"</span> -p <span class="string">"<span class="variable">$&#123;password&#125;</span>"</span> harbor.finupgroup.com</div><div class="line">docker push <span class="variable">$dockerTAG</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"push done.."</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://boyneng.com/2017/12/11/learn-git/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1502,131 +1623,11 @@ dict = make(map[string]int)  或 dict = map[string]int{}
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2017/09/03/Golang 时间日期/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="能孩子">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="能孩子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/03/Golang 时间日期/" itemprop="url">Golang 时间日期</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-03T17:04:02+08:00">
-                2017-09-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="当前时间"><a href="#当前时间" class="headerlink" title="当前时间"></a>当前时间</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//当前时间戳</span></div><div class="line">fmt.Println(time.Now().Unix())</div><div class="line"><span class="comment">// 格式化时间</span></div><div class="line">fmt.Println(time.Now().Format(<span class="string">"2006-01-02 15:04:05"</span>)) <span class="comment">//年月日时分秒格式为固定数字</span></div><div class="line"><span class="comment">//时间戳-&gt; 格式化</span></div><div class="line">fmt.Println(time.Unix(<span class="number">1504429995</span>, <span class="number">0</span>).Format(<span class="string">"2006-01-02 15:04:05"</span>))</div><div class="line"><span class="comment">//格式化 -&gt; 时间戳</span></div><div class="line">t, _ := time.Parse(<span class="string">"2006-01-02 15:04:05"</span>, <span class="string">"2018-01-01 00:04:00"</span>)</div><div class="line">fmt.Println(t.Unix())</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1671,7 +1672,7 @@ dict = make(map[string]int)  或 dict = map[string]int{}
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1693,7 +1694,7 @@ dict = make(map[string]int)  或 dict = map[string]int{}
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

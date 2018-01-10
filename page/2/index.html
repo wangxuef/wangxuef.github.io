@@ -278,6 +278,126 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2017/09/03/Golang 时间日期/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="能孩子">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="能孩子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/03/Golang 时间日期/" itemprop="url">Golang 时间日期</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-03T17:04:02+08:00">
+                2017-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="当前时间"><a href="#当前时间" class="headerlink" title="当前时间"></a>当前时间</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//当前时间戳</span></div><div class="line">fmt.Println(time.Now().Unix())</div><div class="line"><span class="comment">// 格式化时间</span></div><div class="line">fmt.Println(time.Now().Format(<span class="string">"2006-01-02 15:04:05"</span>)) <span class="comment">//年月日时分秒格式为固定数字</span></div><div class="line"><span class="comment">//时间戳-&gt; 格式化</span></div><div class="line">fmt.Println(time.Unix(<span class="number">1504429995</span>, <span class="number">0</span>).Format(<span class="string">"2006-01-02 15:04:05"</span>))</div><div class="line"><span class="comment">//格式化 -&gt; 时间戳</span></div><div class="line">t, _ := time.Parse(<span class="string">"2006-01-02 15:04:05"</span>, <span class="string">"2018-01-01 00:04:00"</span>)</div><div class="line">fmt.Println(t.Unix())</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://boyneng.com/2017/09/03/govendor golang依赖管理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -541,19 +661,13 @@
       
         
           
-            <h4 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h4><ul>
-<li>docker pull [选项] [Docker Registry地址]&lt;仓库名&gt;:&lt;标签&gt;</li>
-<li>docker pull ubuntu:14.04</li>
-</ul>
-<p>上面的命令中没有给出 Docker Registry 地址，因此将会从 Docker Hub 获取镜像。而镜像名称是 ubuntu:14.04，因此将会获取官方镜像 library/ubuntu 仓库中标签为 14.04 的镜像。</p>
-<ul>
-<li>在某个镜像的基础上运行容器</li>
-<li>命令举例：docker run -it –rm ubuntu:14.04 bash</li>
-</ul>
+            <h2 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 在某个镜像的基础上运行容器</div><div class="line">docker run -it --rm ubuntu:14.04 bash</div></pre></td></tr></table></figure>
 <p><em>每次执行 docker run  命令都会创建新的容器，建议一次创建后，使用 docker start/stop  来启动和停用容器。</em></p>
 <pre><code>-i：交互式操作   
 -t：终端    
---rm: 容器退出后随之将其删除    
+--rm: 容器退出后随之将其删除   
+-d：后台运行模式（使用-d 不能使用--rm）
+--name: 指定容器名字 
 ubuntu:14.04：表示用这个镜像为基础启动容器
 bash：命令
 exit命令退出容器
@@ -580,7 +694,19 @@ exit命令退出容器
 </ul>
 <p>运行容器时候做的一些修改会记录到容器存储层，commit可以将存储层保存成新的镜像（nginx:v2 代表 仓库名：标签）</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">docker tag hyperledger/fabric-ca:x86_64-1.0.1 hyperledger/fabric-ca:latest  </div><div class="line">docker stop 容器ID</div><div class="line">docker stop $(docker ps -aq)</div><div class="line">docker rm $(docker ps -aq)   //删除所有容器</div><div class="line">docker rmi 镜像ID</div></pre></td></tr></table></figure>
-<h4 id="push-镜像"><a href="#push-镜像" class="headerlink" title="push 镜像"></a>push 镜像</h4><p>我们把镜像推送到私服：harbor.finupgroup.com/laserpay<br>先把镜像tag：<br><code>docker tag tesla-java:latest harbor.finupgroup.com/laserpay/tesla-java:20180104</code><br>然后登录输入用户名密码：<br><code>docker login harbor.finupgroup.com</code><br>执行push：<br><code>docker push harbor.finupgroup.com/laserpay/tesla-java:20180104</code></p>
+<h2 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h2><h3 id="pull-镜像"><a href="#pull-镜像" class="headerlink" title="pull 镜像"></a>pull 镜像</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># docker pull [选项] [Docker Registry地址]&lt;仓库名&gt;:&lt;标签&gt;</div><div class="line">docker pull ubuntu:14.04</div></pre></td></tr></table></figure>
+<p>上面的命令中没有给出 Docker Registry 地址，因此将会从 Docker Hub 获取镜像。而镜像名称是 ubuntu:14.04，因此将会获取官方镜像 library/ubuntu 仓库中标签为 14.04 的镜像。</p>
+<h3 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">FROM harbor.finupgroup.com/laserpay/tesla-java:20180104</div><div class="line"></div><div class="line">MAINTAINER wangxuefei&lt;wangxuefei@finupgroup.com&gt;</div><div class="line"># 所有拷贝到container中的文件和文件夹权限为0755，uid和gid为0</div><div class="line">ADD quickpayment /data/quickpayment</div></pre></td></tr></table></figure>
+<h4 id="RUN-ENV-命令"><a href="#RUN-ENV-命令" class="headerlink" title="RUN ENV 命令"></a>RUN ENV 命令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">RUN rm -f /usr/share/logstash/pipeline/logstash.conf</div><div class="line">RUN /usr/share/logstash/bin/logstash-plugin install --no-verify logstash-output-mongodb</div><div class="line">RUN echo &quot;deb http://archive.ubuntu.com/ubuntu precise main universe&quot;&gt; /etc/apt/sources.list</div><div class="line"></div><div class="line">ENV XPACK_MONITORING_ENABLED false</div></pre></td></tr></table></figure>
+<h4 id="CMD-ENTRYPOINT-命令"><a href="#CMD-ENTRYPOINT-命令" class="headerlink" title="CMD ENTRYPOINT 命令"></a>CMD ENTRYPOINT 命令</h4><p>CMD 指容器启动后运行的命令，如果有多个则只执行最后一条，ENTRYPOINT也是容器启动后运行的命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">CMD [&quot;/usr/share/logstash/bin/logstash&quot;,&quot;-f&quot;,&quot;/usr/share/logstash/pipeline/mongodb-40.conf&quot;]</div><div class="line"></div><div class="line">CMD [&quot;executable&quot;,&quot;param1&quot;,&quot;param2&quot;] (like an exec, this is the preferred form) </div><div class="line"></div><div class="line">ENTRYPOINT [&quot;executable&quot;, &quot;param1&quot;, &quot;param2&quot;] (like an exec, the preferred form)</div><div class="line"></div><div class="line">ENTRYPOINT service tomcat7 start &amp;&amp; tail -f /opt/tomcat7/logs/catalina.out</div></pre></td></tr></table></figure>
+<p>如果Dockerfile同时使用了ENTRYPOINT和CMD命令，则CMD命令的功能为传入参数给ENTRYPOINT，格式为<code>CMD [&quot;param1&quot;,&quot;param2&quot;]</code></p>
+<h4 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h4><p>将容器中的端口映射成宿主机器中的某个端口，此处EXPOSE指的是容器端口，也就是Dockerfile内不能指定要映射的宿主机的端口。格式为<code>EXPOSE 30330</code>，然后执行<code>docker run</code>命令需要用<code>-p</code>指定30330，这样宿主机会将次端口随机映射到一个端口。也可以指定宿主机的端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># Dockerfile</div><div class="line">EXPOSE 30330</div><div class="line"></div><div class="line">docker run -p 8080:30330</div></pre></td></tr></table></figure>
+<h3 id="build-镜像"><a href="#build-镜像" class="headerlink" title="build 镜像"></a>build 镜像</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker build -t laserpay/quickpayment:20180109 .</div></pre></td></tr></table></figure>
+<h3 id="push-镜像"><a href="#push-镜像" class="headerlink" title="push 镜像"></a>push 镜像</h3><p>我们把镜像推送到私服：harbor.finupgroup.com/laserpay</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 先把镜像tag：</div><div class="line">docker tag tesla-java:latest harbor.finupgroup.com/laserpay/tesla-java:20180104</div><div class="line">#然后登录输入用户名密码：</div><div class="line">docker login harbor.finupgroup.com</div><div class="line"># 执行push：</div><div class="line">docker push harbor.finupgroup.com/laserpay/tesla-java:20180104</div></pre></td></tr></table></figure>
+<p>ref:<br><a href="编写 Dockerfile 的最佳实践">http://cizixs.com/2017/03/28/dockerfile-best-practice</a></p>
 
           
         
@@ -1626,133 +1752,11 @@ exit命令退出容器
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2013/11/11/装饰者模式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="能孩子">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="能孩子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/11/11/装饰者模式/" itemprop="url">装饰模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-11-11T13:09:04+08:00">
-                2013-11-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>装饰模式就是给一个对象增加一些新的功能，而且是动态的，要求装饰对象和被装饰对象实现同一个接口，装饰对象持有被装饰对象的实例。</p>
-<p>Source类是被装饰类，Decorator类是一个装饰类，可以为Source类动态的添加一些功能。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Sourceable</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Source</span> <span class="keyword">implements</span> <span class="title">Sourceable</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"original method"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Decorator</span> <span class="keyword">implements</span> <span class="title">Sourceable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Sourceable source;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Decorator</span><span class="params">(Sourceable source)</span></span>&#123;</div><div class="line">        <span class="keyword">super</span>();</div><div class="line">        <span class="keyword">this</span>.source = source;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"before decorator"</span>);</div><div class="line">        source.method();</div><div class="line">        System.out.println(<span class="string">"after decorator"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DecoratorTest</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Sourceable source = <span class="keyword">new</span> Source();</div><div class="line">        Sourceable obj = <span class="keyword">new</span> Decorator(source);</div><div class="line">        obj.method();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1797,7 +1801,7 @@ exit命令退出容器
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1819,7 +1823,7 @@ exit命令退出容器
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
