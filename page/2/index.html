@@ -668,19 +668,19 @@
 --rm: 容器退出后随之将其删除   
 -d：后台运行模式（使用-d 不能使用--rm）
 --name: 指定容器名字 
+-v: 挂载目录
 ubuntu:14.04：表示用这个镜像为基础启动容器
 bash：命令
 exit命令退出容器
 </code></pre><ul>
-<li>docker images</li>
-</ul>
-<p>列出已经下载下来的镜像。包含几个字段：</p>
-<pre><code>REPOSITORY TAG IMAGE ID CREATED SIZE
-</code></pre><ul>
 <li>命令举例：docker run –name webserver -d -p 80:80 nginx</li>
 </ul>
 <p>在nginx镜像上运行一个容器，命名为webserver。-d代表后台运行并输出容器ID，-p映射端口80</p>
-<p>启动这个容器后，可以通过exec进入容器修改内容</p>
+<ul>
+<li>数据卷挂载</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 将宿主机的目录挂载到容器中：/data/app/public</div><div class="line">docker run --name quickpay -d -p 8080:30330 -v /Users/ix/service/dockerTest/public/:/data/app/public laserpay/quickpay:latest</div><div class="line"></div><div class="line"># 将quickpay容器作为数据卷的提供者</div><div class="line">docker run -d -p 8081:30330 --volumes-from quickpay laserpay/quickpay:20180109</div></pre></td></tr></table></figure>
+<p>启动容器后，可以通过exec进入容器修改内容</p>
 <ul>
 <li>docker exec -it webserver bash</li>
 </ul>
@@ -694,19 +694,20 @@ exit命令退出容器
 </ul>
 <p>运行容器时候做的一些修改会记录到容器存储层，commit可以将存储层保存成新的镜像（nginx:v2 代表 仓库名：标签）</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">docker tag hyperledger/fabric-ca:x86_64-1.0.1 hyperledger/fabric-ca:latest  </div><div class="line">docker stop 容器ID</div><div class="line">docker stop $(docker ps -aq)</div><div class="line">docker rm $(docker ps -aq)   //删除所有容器</div><div class="line">docker rmi 镜像ID</div></pre></td></tr></table></figure>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 杀死所有正在运行的容器</div><div class="line">docker kill $(docker ps -a -q)</div><div class="line"># 删除所有容器</div><div class="line">docker rm $(docker ps -a -q)</div><div class="line"># 关闭容器</div><div class="line">docker stop CONTAINER ID或者NAMES</div><div class="line"># 获取容器的端口映射配置</div><div class="line">docker port CONTAINER ID或者NAMES</div></pre></td></tr></table></figure>
 <h2 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h2><h3 id="pull-镜像"><a href="#pull-镜像" class="headerlink" title="pull 镜像"></a>pull 镜像</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># docker pull [选项] [Docker Registry地址]&lt;仓库名&gt;:&lt;标签&gt;</div><div class="line">docker pull ubuntu:14.04</div></pre></td></tr></table></figure>
 <p>上面的命令中没有给出 Docker Registry 地址，因此将会从 Docker Hub 获取镜像。而镜像名称是 ubuntu:14.04，因此将会获取官方镜像 library/ubuntu 仓库中标签为 14.04 的镜像。</p>
 <h3 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">FROM harbor.finupgroup.com/laserpay/tesla-java:20180104</div><div class="line"></div><div class="line">MAINTAINER wangxuefei&lt;wangxuefei@finupgroup.com&gt;</div><div class="line"># 所有拷贝到container中的文件和文件夹权限为0755，uid和gid为0</div><div class="line">ADD quickpayment /data/quickpayment</div></pre></td></tr></table></figure>
 <h4 id="RUN-ENV-命令"><a href="#RUN-ENV-命令" class="headerlink" title="RUN ENV 命令"></a>RUN ENV 命令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">RUN rm -f /usr/share/logstash/pipeline/logstash.conf</div><div class="line">RUN /usr/share/logstash/bin/logstash-plugin install --no-verify logstash-output-mongodb</div><div class="line">RUN echo &quot;deb http://archive.ubuntu.com/ubuntu precise main universe&quot;&gt; /etc/apt/sources.list</div><div class="line"></div><div class="line">ENV XPACK_MONITORING_ENABLED false</div></pre></td></tr></table></figure>
 <h4 id="CMD-ENTRYPOINT-命令"><a href="#CMD-ENTRYPOINT-命令" class="headerlink" title="CMD ENTRYPOINT 命令"></a>CMD ENTRYPOINT 命令</h4><p>CMD 指容器启动后运行的命令，如果有多个则只执行最后一条，ENTRYPOINT也是容器启动后运行的命令。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">CMD [&quot;/usr/share/logstash/bin/logstash&quot;,&quot;-f&quot;,&quot;/usr/share/logstash/pipeline/mongodb-40.conf&quot;]</div><div class="line"></div><div class="line">CMD [&quot;executable&quot;,&quot;param1&quot;,&quot;param2&quot;] (like an exec, this is the preferred form) </div><div class="line"></div><div class="line">ENTRYPOINT [&quot;executable&quot;, &quot;param1&quot;, &quot;param2&quot;] (like an exec, the preferred form)</div><div class="line"></div><div class="line">ENTRYPOINT service tomcat7 start &amp;&amp; tail -f /opt/tomcat7/logs/catalina.out</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">CMD [&quot;/usr/share/logstash/bin/logstash&quot;,&quot;-f&quot;,&quot;/usr/share/logstash/pipeline/mongodb-40.conf&quot;]</div><div class="line"></div><div class="line">CMD [&quot;executable&quot;,&quot;param1&quot;,&quot;param2&quot;] (like an exec, this is the preferred form) </div><div class="line"></div><div class="line">ENTRYPOINT [&quot;executable&quot;, &quot;param1&quot;, &quot;param2&quot;] (推荐使用的 exec 形式)</div><div class="line"></div><div class="line">ENTRYPOINT service tomcat7 start &amp;&amp; tail -f /opt/tomcat7/logs/catalina.out (shell 形式)</div></pre></td></tr></table></figure>
 <p>如果Dockerfile同时使用了ENTRYPOINT和CMD命令，则CMD命令的功能为传入参数给ENTRYPOINT，格式为<code>CMD [&quot;param1&quot;,&quot;param2&quot;]</code></p>
 <h4 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h4><p>将容器中的端口映射成宿主机器中的某个端口，此处EXPOSE指的是容器端口，也就是Dockerfile内不能指定要映射的宿主机的端口。格式为<code>EXPOSE 30330</code>，然后执行<code>docker run</code>命令需要用<code>-p</code>指定30330，这样宿主机会将次端口随机映射到一个端口。也可以指定宿主机的端口</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># Dockerfile</div><div class="line">EXPOSE 30330</div><div class="line"></div><div class="line">docker run -p 8080:30330</div></pre></td></tr></table></figure>
 <h3 id="build-镜像"><a href="#build-镜像" class="headerlink" title="build 镜像"></a>build 镜像</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker build -t laserpay/quickpayment:20180109 .</div></pre></td></tr></table></figure>
 <h3 id="push-镜像"><a href="#push-镜像" class="headerlink" title="push 镜像"></a>push 镜像</h3><p>我们把镜像推送到私服：harbor.finupgroup.com/laserpay</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 先把镜像tag：</div><div class="line">docker tag tesla-java:latest harbor.finupgroup.com/laserpay/tesla-java:20180104</div><div class="line">#然后登录输入用户名密码：</div><div class="line">docker login harbor.finupgroup.com</div><div class="line"># 执行push：</div><div class="line">docker push harbor.finupgroup.com/laserpay/tesla-java:20180104</div></pre></td></tr></table></figure>
-<p>ref:<br><a href="编写 Dockerfile 的最佳实践">http://cizixs.com/2017/03/28/dockerfile-best-practice</a></p>
+<p>ref:<br><a href="http://cizixs.com/2017/03/28/dockerfile-best-practice" target="_blank" rel="external">编写 Dockerfile 的最佳实践</a></p>
 
           
         
