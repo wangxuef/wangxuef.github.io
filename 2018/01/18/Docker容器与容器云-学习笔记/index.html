@@ -104,7 +104,7 @@
 <meta property="og:description" content="Docker 基础docker 命令分类：   子命令分类 子命令     Docker环境信息 info, version   容器生命周期 create, exec, kill, pause, restart, rm, run, start, stop, unpause   镜像仓库命令 login, logout, pull, push, search   镜像管理 build, image">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://boyneng.com/2018/01/18/Docker容器与容器云-学习笔记/first-docker-case.png">
-<meta property="og:updated_time" content="2018-01-18T06:54:22.368Z">
+<meta property="og:updated_time" content="2018-01-18T06:58:09.631Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker容器与容器云-学习笔记">
 <meta name="twitter:description" content="Docker 基础docker 命令分类：   子命令分类 子命令     Docker环境信息 info, version   容器生命周期 create, exec, kill, pause, restart, rm, run, start, stop, unpause   镜像仓库命令 login, logout, pull, push, search   镜像管理 build, image">
@@ -396,6 +396,11 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">./redis-server redis.conf  #启动</div><div class="line">./redis-cli shutdown  #停止</div></pre></td></tr></table></figure>
 <h4 id="docker-相关"><a href="#docker-相关" class="headerlink" title="docker 相关"></a>docker 相关</h4><p>通过inspect命令查看volume挂载情况，书中命令为 </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker inspect --format &quot;&#123;&#123;.Volumes&#125;&#125;&quot; bc8e</div></pre></td></tr></table></figure>
+<p>结果会报错 <code>Template parsing error: template: :1:2: executing &quot;&quot; at &lt;.Volumes&gt;: map has no entry for key &quot;Volumes&quot;</code>。<br>直接inspect结果显示Volumes在Config的下一级，应该是docker升级之后的问题。所以改命令为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker inspect --format &quot;&#123;&#123;.Config.Volumes&#125;&#125;&quot; bc8e</div></pre></td></tr></table></figure>
+<p>显示结果为 <code>map[/data:{}]</code>。可以看出只有容器数据卷的信息 <code>/data</code>，没有宿主机的挂载目录信息。这就需要使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker inspect -f &quot;&#123;&#123;.Mounts&#125;&#125;&quot; bc8e</div></pre></td></tr></table></figure>
+<p>命令查看，得到volume宿主机目录为 <code>/var/lib/docker/volumes/0127e45aaf6fbe5a726003c87cbbdd0ba2e3ee90d12df7475f1dcb6f9c79c056/_data</code>。综上，折腾一番后就应该直接查看Mounts。</p>
 <p>可以进入宿主机上的目录了，但是在mac下压根就没有这个目录。反正最后StackOverflow上找到答案 <a href="https://stackoverflow.com/questions/38532483/where-is-var-lib-docker-on-mac-os-x" target="_blank" rel="external">Where is /var/lib/docker on Mac/OS X</a> 。简单来说就是docker只能运行在linux系统上，mac上的安装是基于一个VM，所以我们要进入这个VM查找目录。执行了一条神命令 <code>screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty</code>，进入了这个VM。在VM上的 <code>var/lib/docker/volumes/0127e45aaf6fbe5a726003c87cbbdd0ba2e3ee90d12df7475f1dcb6f9c79c056/_data</code> 目录中放入文件，容器中的 <code>/data</code> 目录就能看到这个文件了。</p>
 
       
