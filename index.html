@@ -278,6 +278,172 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2018/01/18/Docker容器与容器云_学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="能孩子">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="能孩子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/18/Docker容器与容器云_学习笔记/" itemprop="url">Docker容器与容器云-学习笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-18T13:50:51+08:00">
+                2018-01-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Docker-基础"><a href="#Docker-基础" class="headerlink" title="Docker 基础"></a>Docker 基础</h2><h3 id="docker-命令分类："><a href="#docker-命令分类：" class="headerlink" title="docker 命令分类："></a>docker 命令分类：</h3><table>
+<thead>
+<tr>
+<th>子命令分类</th>
+<th>子命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Docker环境信息</td>
+<td>info, version</td>
+</tr>
+<tr>
+<td>容器生命周期</td>
+<td>create, exec, kill, pause, restart, rm, run, start, stop, unpause</td>
+</tr>
+<tr>
+<td>镜像仓库命令</td>
+<td>login, logout, pull, push, search</td>
+</tr>
+<tr>
+<td>镜像管理</td>
+<td>build, images, import, load, rmi, save, tag, commit</td>
+</tr>
+<tr>
+<td>容器运维操作</td>
+<td>attach, export, inspect, port, ps, rename, stats, top, wait, cp, diff, update</td>
+</tr>
+<tr>
+<td>容器资源管理</td>
+<td>volume, network</td>
+</tr>
+<tr>
+<td>系统日志</td>
+<td>events, history, logs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="第一个案例"><a href="#第一个案例" class="headerlink" title="第一个案例"></a>第一个案例</h3><p>虽说是第二版了，但是有些地方还是因为docker的升级导致运行不通过。记录踩过的坑。下图为架构图：</p>
+<img src="/2018/01/18/Docker容器与容器云_学习笔记/first-docker-case.png" alt="first-docker-case" title="first-docker-case">
+<p>所有容器的启动脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">docker run -it --name redis-master redis /bin/bash</div><div class="line">docker run -it --name redis-slave1 --link redis-master:master redis /bin/bash</div><div class="line">docker run -it --name redis-slave2 --link redis-master:master redis /bin/bash</div><div class="line">docker run -it --name app1 --link redis-master:db -v ~/temporary/learn-docker/django/app1:/usr/src/app django /bin/bash</div><div class="line">docker run -it --name app2 --link redis-master:db -v ~/temporary/learn-docker/django/app2:/usr/src/app django /bin/bash</div><div class="line">docker run -it --name haproxy --link app1:app1 --link app2:app2 -p 6301:6301 -v ~/temporary/learn-docker/haproxy:/tmp haproxy /bin/bash</div></pre></td></tr></table></figure>
+<h4 id="redis-主从节点配置"><a href="#redis-主从节点配置" class="headerlink" title="redis 主从节点配置"></a>redis 主从节点配置</h4><p>redis.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">bind 0.0.0.0  #不能注释掉</div><div class="line">daemonize yes #如果数据同步失败，可以改为no查看日志</div><div class="line">pidfile /var/run/redis.pid</div><div class="line"></div><div class="line">slaveof master 6379  #这是slave节点的配置</div></pre></td></tr></table></figure>
+<p>redis相关命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">./redis-server redis.conf  #启动</div><div class="line">./redis-cli shutdown  #停止</div></pre></td></tr></table></figure>
+<h4 id="docker-相关"><a href="#docker-相关" class="headerlink" title="docker 相关"></a>docker 相关</h4><p>可以进入宿主机上的目录了，但是在mac下压根就没有这个目录。反正最后StackOverflow上找到答案 <a href="https://stackoverflow.com/questions/38532483/where-is-var-lib-docker-on-mac-os-x" target="_blank" rel="external">Where is /var/lib/docker on Mac/OS X</a> 。简单来说就是docker只能运行在linux系统上，mac上的安装是基于一个VM，所以我们要进入这个VM查找目录。执行了一条神命令 <code>screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty</code>，进入了这个VM。在VM上的 <code>var/lib/docker/volumes/0127e45aaf6fbe5a726003c87cbbdd0ba2e3ee90d12df7475f1dcb6f9c79c056/_data</code> 目录中放入文件，容器中的 <code>/data</code> 目录就能看到这个文件了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://boyneng.com/2018/01/09/shell-脚本/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1500,129 +1666,6 @@ dict = make(map[string]int)  或 dict = map[string]int{}
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2017/09/03/Golang 定时处理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="能孩子">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="能孩子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/03/Golang 定时处理/" itemprop="url">Golang 定时处理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-03T21:45:02+08:00">
-                2017-09-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>功能：每天上午7点，晚上7点检查当前系统时间是否大于给定阈值，若大于则执行命令杀死当前进程</p>
-<p>实现：<br>定时任务使用 github.com/robfig/cron<br>os/exec 执行shell命令（kill -9）</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    expireTime := <span class="string">"2017-09-09 21:23:00"</span></div><div class="line">    et, _ := time.Parse(<span class="string">"2006-01-02 15:04:05"</span>, expireTime)</div><div class="line">    expireStamp := et.Unix()</div><div class="line">    cronTime := <span class="string">"0 0 7,19 ? * *"</span></div><div class="line">    c := cron.New()</div><div class="line">    c.AddFunc(cronTime, <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">        nowStamp := time.Now().Unix()</div><div class="line">        <span class="keyword">if</span> nowStamp &gt; expireStamp &#123;</div><div class="line">            pid := os.Getpid()</div><div class="line">            cmd := exec.Command(<span class="string">"/bin/sh"</span>, <span class="string">"-c"</span>, <span class="string">"kill -9 "</span>+strconv.Itoa(pid))</div><div class="line">            cmd.Run()</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">    c.Start()</div><div class="line">    <span class="keyword">select</span> &#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<pre><code>注：select{} 阻止主线程推出
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1672,7 +1715,7 @@ dict = make(map[string]int)  或 dict = map[string]int{}
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
