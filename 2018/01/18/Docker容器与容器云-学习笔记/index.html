@@ -99,16 +99,16 @@
 <meta name="keywords" content="docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker容器与容器云-学习笔记">
-<meta property="og:url" content="http://boyneng.com/2018/01/18/Docker容器与容器云_学习笔记/index.html">
+<meta property="og:url" content="http://boyneng.com/2018/01/18/Docker容器与容器云-学习笔记/index.html">
 <meta property="og:site_name" content="能孩子">
 <meta property="og:description" content="Docker 基础docker 命令分类：   子命令分类 子命令     Docker环境信息 info, version   容器生命周期 create, exec, kill, pause, restart, rm, run, start, stop, unpause   镜像仓库命令 login, logout, pull, push, search   镜像管理 build, image">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://boyneng.com/2018/01/18/Docker容器与容器云_学习笔记/first-docker-case.png">
-<meta property="og:updated_time" content="2018-01-18T06:50:12.251Z">
+<meta property="og:image" content="http://boyneng.com/2018/01/18/Docker容器与容器云-学习笔记/first-docker-case.png">
+<meta property="og:updated_time" content="2018-01-18T06:54:22.368Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker容器与容器云-学习笔记">
 <meta name="twitter:description" content="Docker 基础docker 命令分类：   子命令分类 子命令     Docker环境信息 info, version   容器生命周期 create, exec, kill, pause, restart, rm, run, start, stop, unpause   镜像仓库命令 login, logout, pull, push, search   镜像管理 build, image">
-<meta name="twitter:image" content="http://boyneng.com/2018/01/18/Docker容器与容器云_学习笔记/first-docker-case.png">
+<meta name="twitter:image" content="http://boyneng.com/2018/01/18/Docker容器与容器云-学习笔记/first-docker-case.png">
 
 
 
@@ -138,7 +138,7 @@
 
 
 
-  <link rel="canonical" href="http://boyneng.com/2018/01/18/Docker容器与容器云_学习笔记/"/>
+  <link rel="canonical" href="http://boyneng.com/2018/01/18/Docker容器与容器云-学习笔记/"/>
 
 
 
@@ -281,7 +281,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2018/01/18/Docker容器与容器云_学习笔记/">
+    <link itemprop="mainEntityOfPage" href="http://boyneng.com/2018/01/18/Docker容器与容器云-学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="能孩子">
@@ -387,14 +387,16 @@
 </tbody>
 </table>
 <h3 id="第一个案例"><a href="#第一个案例" class="headerlink" title="第一个案例"></a>第一个案例</h3><p>虽说是第二版了，但是有些地方还是因为docker的升级导致运行不通过。记录踩过的坑。下图为架构图：</p>
-<img src="/2018/01/18/Docker容器与容器云_学习笔记/first-docker-case.png" alt="first-docker-case" title="first-docker-case">
+<img src="/2018/01/18/Docker容器与容器云-学习笔记/first-docker-case.png" alt="first-docker-case" title="first-docker-case">
 <p>所有容器的启动脚本：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">docker run -it --name redis-master redis /bin/bash</div><div class="line">docker run -it --name redis-slave1 --link redis-master:master redis /bin/bash</div><div class="line">docker run -it --name redis-slave2 --link redis-master:master redis /bin/bash</div><div class="line">docker run -it --name app1 --link redis-master:db -v ~/temporary/learn-docker/django/app1:/usr/src/app django /bin/bash</div><div class="line">docker run -it --name app2 --link redis-master:db -v ~/temporary/learn-docker/django/app2:/usr/src/app django /bin/bash</div><div class="line">docker run -it --name haproxy --link app1:app1 --link app2:app2 -p 6301:6301 -v ~/temporary/learn-docker/haproxy:/tmp haproxy /bin/bash</div></pre></td></tr></table></figure>
 <h4 id="redis-主从节点配置"><a href="#redis-主从节点配置" class="headerlink" title="redis 主从节点配置"></a>redis 主从节点配置</h4><p>redis.conf</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">bind 0.0.0.0  #不能注释掉</div><div class="line">daemonize yes #如果数据同步失败，可以改为no查看日志</div><div class="line">pidfile /var/run/redis.pid</div><div class="line"></div><div class="line">slaveof master 6379  #这是slave节点的配置</div></pre></td></tr></table></figure>
 <p>redis相关命令</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">./redis-server redis.conf  #启动</div><div class="line">./redis-cli shutdown  #停止</div></pre></td></tr></table></figure>
-<h4 id="docker-相关"><a href="#docker-相关" class="headerlink" title="docker 相关"></a>docker 相关</h4><p>可以进入宿主机上的目录了，但是在mac下压根就没有这个目录。反正最后StackOverflow上找到答案 <a href="https://stackoverflow.com/questions/38532483/where-is-var-lib-docker-on-mac-os-x" target="_blank" rel="external">Where is /var/lib/docker on Mac/OS X</a> 。简单来说就是docker只能运行在linux系统上，mac上的安装是基于一个VM，所以我们要进入这个VM查找目录。执行了一条神命令 <code>screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty</code>，进入了这个VM。在VM上的 <code>var/lib/docker/volumes/0127e45aaf6fbe5a726003c87cbbdd0ba2e3ee90d12df7475f1dcb6f9c79c056/_data</code> 目录中放入文件，容器中的 <code>/data</code> 目录就能看到这个文件了。</p>
+<h4 id="docker-相关"><a href="#docker-相关" class="headerlink" title="docker 相关"></a>docker 相关</h4><p>通过inspect命令查看volume挂载情况，书中命令为 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker inspect --format &quot;&#123;&#123;.Volumes&#125;&#125;&quot; bc8e</div></pre></td></tr></table></figure>
+<p>可以进入宿主机上的目录了，但是在mac下压根就没有这个目录。反正最后StackOverflow上找到答案 <a href="https://stackoverflow.com/questions/38532483/where-is-var-lib-docker-on-mac-os-x" target="_blank" rel="external">Where is /var/lib/docker on Mac/OS X</a> 。简单来说就是docker只能运行在linux系统上，mac上的安装是基于一个VM，所以我们要进入这个VM查找目录。执行了一条神命令 <code>screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty</code>，进入了这个VM。在VM上的 <code>var/lib/docker/volumes/0127e45aaf6fbe5a726003c87cbbdd0ba2e3ee90d12df7475f1dcb6f9c79c056/_data</code> 目录中放入文件，容器中的 <code>/data</code> 目录就能看到这个文件了。</p>
 
       
     </div>
