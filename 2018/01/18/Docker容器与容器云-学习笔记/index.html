@@ -104,7 +104,7 @@
 <meta property="og:description" content="Docker 基础docker 命令分类：   子命令分类 子命令     Docker环境信息 info, version   容器生命周期 create, exec, kill, pause, restart, rm, run, start, stop, unpause   镜像仓库命令 login, logout, pull, push, search   镜像管理 build, image">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://boyneng.com/2018/01/18/Docker容器与容器云-学习笔记/first-docker-case.png">
-<meta property="og:updated_time" content="2018-01-18T07:02:10.943Z">
+<meta property="og:updated_time" content="2018-01-24T10:00:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker容器与容器云-学习笔记">
 <meta name="twitter:description" content="Docker 基础docker 命令分类：   子命令分类 子命令     Docker环境信息 info, version   容器生命周期 create, exec, kill, pause, restart, rm, run, start, stop, unpause   镜像仓库命令 login, logout, pull, push, search   镜像管理 build, image">
@@ -403,6 +403,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker inspect -f &quot;&#123;&#123;.Mounts&#125;&#125;&quot; bc8e</div></pre></td></tr></table></figure>
 <p>命令查看，得到volume宿主机目录为<br><code>/var/lib/docker/volumes/0127e45aaf6fbe5a726003c87cbbdd0ba2e3ee90d12df7475f1dcb6f9c79c056/_data</code><br>综上，折腾一番后就应该直接查看Mounts。</p>
 <p>可以进入宿主机上的目录了，但是在mac下压根就没有这个目录。反正最后StackOverflow上找到答案 <a href="https://stackoverflow.com/questions/38532483/where-is-var-lib-docker-on-mac-os-x" target="_blank" rel="external">Where is /var/lib/docker on Mac/OS X</a> 。简单来说就是docker只能运行在linux系统上，mac上的安装是基于一个VM，所以我们要进入这个VM查找目录。执行了一条神命令<br><code>screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty</code><br>进入了这个VM。在VM上的<br><code>var/lib/docker/volumes/0127e45aaf6fbe5a726003c87cbbdd0ba2e3ee90d12df7475f1dcb6f9c79c056/_data</code> 目录中放入文件，容器中的 <code>/data</code> 目录就能看到这个文件了。</p>
+<p>排查问题过程中尝试获取容器IP地址，<a href="http://blog.csdn.net/sannerlittle/article/details/77063800" target="_blank" rel="external">如何获取docker容器IP</a></p>
+<h3 id="docker-容器的监控"><a href="#docker-容器的监控" class="headerlink" title="docker 容器的监控"></a>docker 容器的监控</h3><h4 id="容器监控"><a href="#容器监控" class="headerlink" title="容器监控"></a>容器监控</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">docker ps -a</div><div class="line">docker images</div><div class="line">docker stats redis-master, redis-slave1 #查看CPU、内存、I/O等状态</div><div class="line">docker inspect # 查看镜像和容器的完整构建信息</div><div class="line">docker top # 查看容器中运行的进程</div><div class="line">docker port # 查看端口映射</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -467,8 +469,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/09/shell-脚本/" rel="next" title="shell 脚本">
-                <i class="fa fa-chevron-left"></i> shell 脚本
+              <a href="/2017/12/11/learn-git/" rel="next" title="learn-git">
+                <i class="fa fa-chevron-left"></i> learn-git
               </a>
             
           </div>
@@ -551,7 +553,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -573,7 +575,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -626,7 +628,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-基础"><span class="nav-number">1.</span> <span class="nav-text">Docker 基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-命令分类："><span class="nav-number">1.1.</span> <span class="nav-text">docker 命令分类：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一个案例"><span class="nav-number">1.2.</span> <span class="nav-text">第一个案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#redis-主从节点配置"><span class="nav-number">1.2.1.</span> <span class="nav-text">redis 主从节点配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-相关"><span class="nav-number">1.2.2.</span> <span class="nav-text">docker 相关</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-基础"><span class="nav-number">1.</span> <span class="nav-text">Docker 基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-命令分类："><span class="nav-number">1.1.</span> <span class="nav-text">docker 命令分类：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一个案例"><span class="nav-number">1.2.</span> <span class="nav-text">第一个案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#redis-主从节点配置"><span class="nav-number">1.2.1.</span> <span class="nav-text">redis 主从节点配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-相关"><span class="nav-number">1.2.2.</span> <span class="nav-text">docker 相关</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-容器的监控"><span class="nav-number">1.3.</span> <span class="nav-text">docker 容器的监控</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#容器监控"><span class="nav-number">1.3.1.</span> <span class="nav-text">容器监控</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
